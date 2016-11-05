@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
@@ -7,11 +8,13 @@ public class Car : MonoBehaviour {
 
     private GameObject obj;
     private Rigidbody rBod;
-    [SerializeField]private float speed = 10000000000.0f;
+    [SerializeField]private float speed = 30.0f;
+    private Vector3 accel;
     private Vector3 direction;
+    private Vector3 moveTo;
+    private Vector3 vel;
+    private Vector2 force;
     private float turnAngle = 0;
-    private float xVel = 0;
-    private float zVel = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -21,44 +24,56 @@ public class Car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Move(Input.GetAxis("Vertical"));
-
         Turn(Input.GetAxis("Horizontal"));
-	}
-
-    void Move(float move)
-    {
-        if (move > 0)
+        direction = Vector3.forward;
+        if (Input.GetButtonDown("Jump"))
         {
-            direction = Vector3.forward;
-            direction.Normalize();
-            direction *= 0.2f;
-            xVel += (direction.x * Time.deltaTime);
-            zVel += (direction.z * Time.deltaTime);
-            if (xVel > speed)
+            Move();
+        }
+        /*else
+        {
+            xVel -= (direction.x * Time.deltaTime);
+            zVel -= (direction.z * Time.deltaTime);
+            if (Math.Abs(xVel) < 0)
             {
-                xVel = speed;
+                xVel = 0;
             }
-            if (zVel > speed)
+            if (Math.Abs(zVel) < 0)
             {
-                zVel = speed;
+                zVel = 0;
             }
             rBod.velocity = new Vector3(xVel, rBod.velocity.y, zVel);
+        }*/
+	}
+
+    void Move()
+    {
+        accel = direction;
+        accel.y = 0;
+
+        vel += accel;
+        if(Math.Abs(vel.x) > speed)
+        {
+            vel.x = speed;
         }
+        if (Math.Abs(vel.z) > speed)
+        {
+            vel.z = speed;
+        }
+
+        rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
     }
 
     void Turn(float turn)
     {
         if (turn > 0)
         {
-            turnAngle += (10 * Time.deltaTime);
-        }
-        else if (turn > 0)
-        {
             turnAngle -= (10 * Time.deltaTime);
         }
-        turnAngle += (rBod.rotation.z * Time.deltaTime);
-
-        rBod.rotation = new Quaternion(rBod.rotation.x, rBod.rotation.y, turnAngle, rBod.rotation.w);
+        else if (turn < 0)
+        {
+            turnAngle += (10 * Time.deltaTime);
+        }
+        rBod.rotation = new Quaternion(rBod.rotation.x, rBod.rotation.y, rBod.rotation.z + turnAngle, rBod.rotation.w);
     }
 }
