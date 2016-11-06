@@ -11,10 +11,7 @@ public class Car : MonoBehaviour {
     [SerializeField]private float speed = 30.0f;
     private Vector3 accel;
     private Vector3 direction;
-    private Vector3 moveTo;
     private Vector3 vel;
-    private Vector2 force;
-    private float turnAngle = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -25,55 +22,62 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Turn(Input.GetAxis("Horizontal"));
-        direction = Vector3.forward;
-        if (Input.GetButtonDown("Jump"))
-        {
-            Move();
-        }
-        /*else
-        {
-            xVel -= (direction.x * Time.deltaTime);
-            zVel -= (direction.z * Time.deltaTime);
-            if (Math.Abs(xVel) < 0)
-            {
-                xVel = 0;
-            }
-            if (Math.Abs(zVel) < 0)
-            {
-                zVel = 0;
-            }
-            rBod.velocity = new Vector3(xVel, rBod.velocity.y, zVel);
-        }*/
-	}
+        Move(Input.GetAxis("Vertical"));
+    }
 
-    void Move()
+    void Move(float move)
     {
-        accel = direction;
-        accel.y = 0;
-
-        vel += accel;
-        if(Math.Abs(vel.x) > speed)
+        if (move > 0)
         {
-            vel.x = speed;
-        }
-        if (Math.Abs(vel.z) > speed)
-        {
-            vel.z = speed;
-        }
+            direction = rBod.transform.forward;
+            direction.Normalize();
+            direction *= 0.2f;
 
-        rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
+            accel = direction;
+            accel.y = 0;
+
+            vel += accel;
+            if (Math.Abs(vel.x) > speed)
+            {
+                vel.x = vel.x < 0 ? -speed : speed;
+            }
+            if (Math.Abs(vel.z) > speed)
+            {
+                vel.z = vel.z < 0 ? -speed : speed;
+            }
+            rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+        }
+        else if(move < 0)
+        {
+            direction = rBod.transform.forward;
+            direction.Normalize();
+            direction *= 0.2f;
+
+            accel = direction;
+            accel.y = 0;
+
+            vel -= accel;
+            if (Math.Abs(vel.x) > speed)
+            {
+                vel.x = vel.x < 0 ? -speed : speed;
+            }
+            if (Math.Abs(vel.z) > speed)
+            {
+                vel.z = vel.z < 0 ? -speed : speed;
+            }
+            rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+        }
     }
 
     void Turn(float turn)
     {
         if (turn > 0)
         {
-            turnAngle -= (10 * Time.deltaTime);
+            rBod.transform.Rotate((rBod.transform.up * 50) * Time.deltaTime);
         }
         else if (turn < 0)
         {
-            turnAngle += (10 * Time.deltaTime);
+            rBod.transform.Rotate((rBod.transform.up * -50) * Time.deltaTime);
         }
-        rBod.rotation = new Quaternion(rBod.rotation.x, rBod.rotation.y, rBod.rotation.z + turnAngle, rBod.rotation.w);
     }
 }
