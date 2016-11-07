@@ -8,7 +8,9 @@ public class Car : MonoBehaviour {
 
     private GameObject obj;
     private Rigidbody rBod;
-    [SerializeField]private float speed = 30.0f;
+    [SerializeField]private float speed = 100.0f;
+    private bool isMoving = false;
+    public bool willMove = false;
     private Vector3 accel;
     private Vector3 direction;
     private Vector3 vel;
@@ -21,13 +23,18 @@ public class Car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Turn(Input.GetAxis("Horizontal"));
-        Move(Input.GetAxis("Vertical"));
+        //OverTurned();
+        if (willMove)
+        {
+            Turn(Input.GetAxis("Horizontal"));
+            Move();
+        }
+       
     }
 
-    void Move(float move)
+    void Move()
     {
-        if (move > 0)
+        if (Input.GetButton("ButtonB")) 
         {
             direction = rBod.transform.forward;
             direction.Normalize();
@@ -45,9 +52,10 @@ public class Car : MonoBehaviour {
             {
                 vel.z = vel.z < 0 ? -speed : speed;
             }
-            rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+           rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+            isMoving = true;
         }
-        else if(move < 0)
+        else if(Input.GetButton("ButtonA"))
         {
             direction = rBod.transform.forward;
             direction.Normalize();
@@ -66,18 +74,47 @@ public class Car : MonoBehaviour {
                 vel.z = vel.z < 0 ? -speed : speed;
             }
             rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
         }
     }
 
     void Turn(float turn)
     {
-        if (turn > 0)
+        if(isMoving)
         {
-            rBod.transform.Rotate((rBod.transform.up * 50) * Time.deltaTime);
+            if (turn > 0)
+            {
+                rBod.transform.Rotate((rBod.transform.up * 50) * Time.deltaTime);
+
+            }
+            else if (turn < 0)
+            {
+                rBod.transform.Rotate((rBod.transform.up * -50) * Time.deltaTime);
+            }
         }
-        else if (turn < 0)
+    }
+
+    void OverTurned()
+    {
+        Debug.Log(rBod.transform.up.y);
+        if(rBod.transform.up.y < 0)
         {
-            rBod.transform.Rotate((rBod.transform.up * -50) * Time.deltaTime);
+            StopMovment();
         }
+    }
+
+    void StopMovment()
+    {
+        vel = new Vector3(0, 0, 0);
+    }
+
+    public bool WillMove
+    {
+        get { return willMove; }
+        set { willMove = value; }
     }
 }

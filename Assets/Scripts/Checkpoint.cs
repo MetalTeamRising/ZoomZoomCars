@@ -5,12 +5,15 @@ using System.Collections;
 public class Checkpoint : MonoBehaviour {
 
     private Collider collide;
+    Collision col;
     private int checkpoint;
+    bool isActive = false;
+    int index;
 
 	// Use this for initialization
 	void Start () {
         collide = this.GetComponent<Collider>();
-        checkpoint = 0;
+        //checkpoint = 0;
 	}
 	
 	// Update is called once per frame
@@ -18,11 +21,23 @@ public class Checkpoint : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEvent(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Car")
+        if(other.gameObject.tag == "Car" && isActive)
         {
-            checkpoint++;
+            Debug.Log("checkpoint hit " + index);
+            isActive = false;
         }
+    }
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { isActive = value; }
+    }
+
+    public int Index
+    {
+        get { return index; }
+        set { index = value; }
     }
 }
