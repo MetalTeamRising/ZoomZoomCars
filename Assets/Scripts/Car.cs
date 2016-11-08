@@ -8,7 +8,8 @@ public class Car : MonoBehaviour {
 
     private GameObject obj;
     private Rigidbody rBod;
-    [SerializeField]private float speed = 100.0f;
+    [SerializeField]private float speed = 99.0f;
+    [SerializeField]private float turning = 45;
     private bool isMoving = false;
     public bool willMove = false;
     private Vector3 accel;
@@ -38,46 +39,52 @@ public class Car : MonoBehaviour {
         {
             direction = rBod.transform.forward;
             direction.Normalize();
-            direction *= 0.2f;
 
-            accel = direction;
+            accel = direction * 100;
             accel.y = 0;
 
-            vel += accel;
-            if (Math.Abs(vel.x) > speed)
+            vel += (accel * Time.deltaTime);
+            if(vel.magnitude > speed)
             {
-                vel.x = vel.x < 0 ? -speed : speed;
+                vel.Normalize();
+                vel = vel * speed;
             }
-            if (Math.Abs(vel.z) > speed)
-            {
-                vel.z = vel.z < 0 ? -speed : speed;
-            }
-           rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+            rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
         else if(Input.GetButton("ButtonA"))
         {
             direction = rBod.transform.forward;
             direction.Normalize();
-            direction *= 0.2f;
 
-            accel = direction;
+            accel = direction * 100;
             accel.y = 0;
 
-            vel -= accel;
-            if (Math.Abs(vel.x) > speed)
+            vel -= (accel * Time.deltaTime);
+            if (vel.magnitude > speed)
             {
-                vel.x = vel.x < 0 ? -speed : speed;
+                vel.Normalize();
+                vel = vel * speed;
             }
-            if (Math.Abs(vel.z) > speed)
-            {
-                vel.z = vel.z < 0 ? -speed : speed;
-            }
-            rBod.position = new Vector3(rBod.position.x + vel.x, rBod.position.y, rBod.position.z + vel.z);
+            rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
         else
         {
+            direction = -rBod.transform.forward;
+            direction.Normalize();
+
+            accel = direction * 100;
+            accel.y = 0;
+
+            vel -= (accel * Time.deltaTime);
+            float mags = vel.magnitude;
+            if (mags > 0)
+            {
+                vel.Normalize();
+                vel = vel * 0;
+            }
+            rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = false;
         }
     }
@@ -88,13 +95,14 @@ public class Car : MonoBehaviour {
         {
             if (turn > 0)
             {
-                rBod.transform.Rotate((rBod.transform.up * 50) * Time.deltaTime);
+                rBod.transform.Rotate((rBod.transform.up * turning) * Time.deltaTime);
 
             }
             else if (turn < 0)
             {
-                rBod.transform.Rotate((rBod.transform.up * -50) * Time.deltaTime);
+                rBod.transform.Rotate((rBod.transform.up * -turning) * Time.deltaTime);
             }
+            direction = rBod.transform.forward;
         }
     }
 
