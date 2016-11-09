@@ -31,7 +31,7 @@ public class RaceManager : MonoBehaviour {
             }
             CheckpointArray[i].Index = i;
         }
-        temp = GameObject.Find("starting line");
+        temp = GameObject.FindGameObjectWithTag("Starting Line");
         CheckpointArray[CheckpointArray.Length - 1] = temp.GetComponent<Checkpoint>();
         CheckpointArray[CheckpointArray.Length - 1].IsActive = false;
 
@@ -54,7 +54,7 @@ public class RaceManager : MonoBehaviour {
     {
         if(nextPoint.IsActive == false)
         {
-            if(nextPoint.tag == "StartingLine")
+            if(nextPoint.tag == "Starting Line")
             {
                 GameOver();
             }
