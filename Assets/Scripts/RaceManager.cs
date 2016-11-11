@@ -8,9 +8,7 @@ public class RaceManager : MonoBehaviour {
     GameObject[] myCars;
     Checkpoint nextPoint;
     [SerializeField]
-    GameObject[] cars;
-    ArrayList finishedCars;
-        
+    GameObject[] cars;      
 	// Use this for initialization
 	void Start () {
         //gotta get the checkpoints, the place where the car start
@@ -19,15 +17,19 @@ public class RaceManager : MonoBehaviour {
         CheckpointArray = new Checkpoint[tempCheckArray.Length + 1];
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
-        finishedCars = new ArrayList();
       
         GameObject temp;
         for(int i = 0; i < tempCheckArray.Length; i++)
         {
             temp = GameObject.Find("checkpoint" + (i + 1));
             CheckpointArray[i] = temp.GetComponent<Checkpoint>();
-            if (i == 0)
+            if(i > 0)
             {
+                //CheckpointArray[i].IsActive = false;
+            }
+            else
+            {
+                //CheckpointArray[i].IsActive = true;
                 nextPoint = CheckpointArray[i];
             }
             CheckpointArray[i].Index = i;
@@ -52,14 +54,7 @@ public class RaceManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        for(int i = 0; i < myCars.Length; i++)
-        {
-            if (myCars[i].GetComponent<Car>().IsFinished)
-            {
-                finishedCars.Add(myCars[i]);
-            }
-        }
-        //if()
+        //HitCheckPoint();
 	}
     void RaceStart()
     {
