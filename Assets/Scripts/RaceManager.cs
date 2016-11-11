@@ -4,17 +4,20 @@ using System.Collections;
 public class RaceManager : MonoBehaviour {
     GameObject[] tempCheckArray;
     Checkpoint[] CheckpointArray;
-    GameObject carSpawn;
-    public GameObject car; //this is temp
-    GameObject myCar;
+    GameObject[] SpawnArray;
+    GameObject[] myCars;
     Checkpoint nextPoint;
-
+    [SerializeField]
+    GameObject[] cars;      
 	// Use this for initialization
 	void Start () {
         //gotta get the checkpoints, the place where the car start
         //this gets the check points
         tempCheckArray = GameObject.FindGameObjectsWithTag("Checkpoint");
         CheckpointArray = new Checkpoint[tempCheckArray.Length + 1];
+        SpawnArray = new GameObject[cars.Length];
+        myCars = new GameObject[cars.Length];
+      
         GameObject temp;
         for(int i = 0; i < tempCheckArray.Length; i++)
         {
@@ -22,11 +25,11 @@ public class RaceManager : MonoBehaviour {
             CheckpointArray[i] = temp.GetComponent<Checkpoint>();
             if(i > 0)
             {
-                CheckpointArray[i].IsActive = false;
+                //CheckpointArray[i].IsActive = false;
             }
             else
             {
-                CheckpointArray[i].IsActive = true;
+                //CheckpointArray[i].IsActive = true;
                 nextPoint = CheckpointArray[i];
             }
             CheckpointArray[i].Index = i;
@@ -36,39 +39,30 @@ public class RaceManager : MonoBehaviour {
         CheckpointArray[CheckpointArray.Length - 1].IsActive = false;
 
         //get where the car will spawn
-        carSpawn = GameObject.Find("Spawn");
+        SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
 
         //place the car
-        myCar = Instantiate(car);
-        myCar.transform.position = carSpawn.transform.position;
-        myCar.transform.forward = carSpawn.transform.forward;
+       for(int i = 0; i < SpawnArray.Length; i++)
+        {
+            myCars[i] = Instantiate(cars[i]);
+            myCars[i].transform.position = SpawnArray[i].transform.position;
+            myCars[i].transform.forward = SpawnArray[i].transform.forward;
+        }
 
+        RaceStart();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        HitCheckPoint();
+        //HitCheckPoint();
 	}
-
-    void HitCheckPoint()
-    {
-        if(nextPoint.IsActive == false)
-        {
-            if(nextPoint.tag == "Starting Line")
-            {
-                GameOver();
-            }
-            else
-            {
-                nextPoint = CheckpointArray[nextPoint.Index + 1];
-                nextPoint.IsActive = true;
-            }
-        }
-   }
     void RaceStart()
     {
         //countdown, lets the car go
-        myCar.GetComponent<Car>().willMove = true;
+        for(int i = 0; i < SpawnArray.Length; i++)
+        {
+            myCars[i].GetComponent<Car>().willMove = true;
+        }
     }
     void GameOver()
     {

@@ -15,7 +15,9 @@ public class Car : MonoBehaviour {
     private Vector3 accel;
     private Vector3 direction;
     private Vector3 vel;
-
+    private Checkpoint nextPoint;
+    private int pointIndex;
+    private bool isFinished = false;
 	// Use this for initialization
 	void Start () {
         obj = gameObject;
@@ -120,9 +122,38 @@ public class Car : MonoBehaviour {
         vel = new Vector3(0, 0, 0);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Checkpoint")
+        {
+            Debug.Log("this is a checkpoint");
+            if(pointIndex == other.GetComponent<Checkpoint>().Index)
+            {
+                Debug.Log("passed it " + pointIndex);
+                pointIndex++;
+            }
+        }
+        if(other.gameObject.tag == "Starting Line")
+        {
+            Debug.Log("finish line");
+        }
+    }
+
     public bool WillMove
     {
         get { return willMove; }
         set { willMove = value; }
+    }
+
+    public Checkpoint NextPoint
+    {
+        get { return nextPoint; }
+        set { nextPoint = value; }
+    }
+
+    public bool IsFinished
+    {
+        get { return isFinished; }
+        set { isFinished = value; }
     }
 }
