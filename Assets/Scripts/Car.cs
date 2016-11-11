@@ -153,7 +153,7 @@ public class Car : MonoBehaviour {
                 pointIndex++;
             }
         }
-        if(other.gameObject.tag == "Starting Line")
+        if(other.gameObject.tag == "Finish Line")
         {
             Debug.Log("finish line");
             isFinished = true;

@@ -37,7 +37,7 @@ public class RaceManager : MonoBehaviour {
             }
             CheckpointArray[i].Index = i;
         }
-        temp = GameObject.FindGameObjectWithTag("Starting Line");
+        temp = GameObject.FindGameObjectWithTag("Finish Line");
         CheckpointArray[CheckpointArray.Length - 1] = temp.GetComponent<Checkpoint>();
         CheckpointArray[CheckpointArray.Length - 1].IsActive = false;
 
