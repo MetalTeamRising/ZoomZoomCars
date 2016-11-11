@@ -16,6 +16,7 @@ public class Car : MonoBehaviour {
     private Vector3 direction;
     private Vector3 vel;
     private Checkpoint nextPoint;
+    private Quaternion ogRot;
     private int pointIndex;
     private bool isFinished = false;
     [SerializeField]
@@ -29,6 +30,7 @@ public class Car : MonoBehaviour {
 	void Start () {
         obj = gameObject;
         rBod = this.GetComponent<Rigidbody>();
+        ogRot = rBod.rotation;
 
         //setting the custom buttons for the car
         horizontal = "P" + player + "_Horizontal";
@@ -41,7 +43,7 @@ public class Car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //OverTurned();
+        OverTurned();
         if (willMove)
         {
             Turn(Input.GetAxis(horizontal));
@@ -131,6 +133,7 @@ public class Car : MonoBehaviour {
         if(rBod.transform.up.y < 0)
         {
             StopMovment();
+            rBod.rotation = new Quaternion(ogRot.x, ogRot.y, ogRot.z, ogRot.w);
         }
     }
 
