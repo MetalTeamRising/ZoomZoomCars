@@ -42,7 +42,7 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
 
         //place the car
-       for(int i = 0; i < SpawnArray.Length; i++)
+       for(int i = 0; i < cars.Length; i++)
         {
             myCars[i] = Instantiate(cars[i]);
             myCars[i].transform.position = SpawnArray[i].transform.position;
@@ -59,7 +59,7 @@ public class RaceManager : MonoBehaviour {
     void RaceStart()
     {
         //countdown, lets the car go
-        for(int i = 0; i < SpawnArray.Length; i++)
+        for(int i = 0; i < cars.Length; i++)
         {
             myCars[i].GetComponent<Car>().willMove = true;
         }
