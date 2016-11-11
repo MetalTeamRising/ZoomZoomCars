@@ -15,11 +15,28 @@ public class Car : MonoBehaviour {
     private Vector3 accel;
     private Vector3 direction;
     private Vector3 vel;
-
+    private Checkpoint nextPoint;
+    private int pointIndex;
+    private bool isFinished = false;
+    [SerializeField]
+    int player = 1;
+    string horizontal;
+    string aButton;
+    string bButton;
+    string select;
+    string start;
 	// Use this for initialization
 	void Start () {
         obj = gameObject;
         rBod = this.GetComponent<Rigidbody>();
+
+        //setting the custom buttons for the car
+        horizontal = "P" + player + "_Horizontal";
+        aButton = "P" + player + "_ButtonA";
+        bButton = "P" + player + "_ButtonB";
+        select = "P" + player + "_Select";
+        start = "P" + player + "_Start";
+
 	}
 	
 	// Update is called once per frame
@@ -27,15 +44,14 @@ public class Car : MonoBehaviour {
         //OverTurned();
         if (willMove)
         {
-            Turn(Input.GetAxis("Horizontal"));
+            Turn(Input.GetAxis(horizontal));
             Move();
         }
-       
     }
 
     void Move()
     {
-        if (Input.GetButton("ButtonB")) 
+        if (Input.GetButton(bButton)) 
         {
             direction = rBod.transform.forward;
             direction.Normalize();
@@ -52,7 +68,7 @@ public class Car : MonoBehaviour {
             rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
-        else if(Input.GetButton("ButtonA"))
+        else if(Input.GetButton(aButton))
         {
             direction = rBod.transform.forward;
             direction.Normalize();
@@ -93,13 +109,16 @@ public class Car : MonoBehaviour {
     {
         if(isMoving)
         {
+            Debug.Log("inside turing");
             if (turn > 0)
             {
+                Debug.Log("turing > 0");
                 rBod.transform.Rotate((rBod.transform.up * turning) * Time.deltaTime);
 
             }
             else if (turn < 0)
             {
+                Debug.Log("turning < 0");
                 rBod.transform.Rotate((rBod.transform.up * -turning) * Time.deltaTime);
             }
             direction = rBod.transform.forward;
@@ -120,9 +139,40 @@ public class Car : MonoBehaviour {
         vel = new Vector3(0, 0, 0);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Checkpoint")
+        {
+            Debug.Log("this is a checkpoint");
+            if(pointIndex == other.GetComponent<Checkpoint>().Index)
+            {
+                Debug.Log("passed it " + pointIndex);
+                pointIndex++;
+            }
+        }
+        if(other.gameObject.tag == "Starting Line")
+        {
+            Debug.Log("finish line");
+            isFinished = true;
+            willMove = false;
+        }
+    }
+
     public bool WillMove
     {
         get { return willMove; }
         set { willMove = value; }
+    }
+
+    public Checkpoint NextPoint
+    {
+        get { return nextPoint; }
+        set { nextPoint = value; }
+    }
+
+    public bool IsFinished
+    {
+        get { return isFinished; }
+        set { isFinished = value; }
     }
 }
