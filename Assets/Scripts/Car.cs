@@ -47,6 +47,11 @@ public class Car : MonoBehaviour {
             Turn(Input.GetAxis(horizontal));
             Move();
         }
+        if (Input.GetButtonDown(select))
+        {
+            rBod.position = new Vector3(nextPoint.transform.position.x, nextPoint.transform.position.y + 30, nextPoint.transform.position.z);
+            rBod.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        }
     }
 
     void Move()
@@ -135,6 +140,7 @@ public class Car : MonoBehaviour {
             if(pointIndex == other.GetComponent<Checkpoint>().Index)
             {
                 Debug.Log("passed it " + pointIndex);
+                nextPoint = other.GetComponent<Checkpoint>();
                 pointIndex++;
             }
         }
