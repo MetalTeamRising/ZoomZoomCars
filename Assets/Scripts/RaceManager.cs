@@ -61,9 +61,12 @@ public class RaceManager : MonoBehaviour {
         //looping through all the cars and seeing if it has finished
         for(int i = 0; i < myCars.Length; i++)
         {
-            if (myCars[i].GetComponent<Car>().IsFinished)
+            for(int x = 0; x < myCars.Length; x++)
             {
-                finishedRacers[i] = myCars[i];
+                if (myCars[i].GetComponent<Car>().IsFinished)
+                {
+                    finishedRacers[x] = myCars[i];
+                }
             }
         }
         bool gameOver = false;
@@ -73,13 +76,14 @@ public class RaceManager : MonoBehaviour {
             if(finishedRacers[i] == null)
             {
                 gameOver = false;
-                return;
+                break;
             }
             gameOver = true;
         }
 
         if (gameOver)
         {
+            Debug.Log("player " + finishedRacers[0].GetComponent<Car>().Player + " finished first");
             GameOver();
         }
 	}

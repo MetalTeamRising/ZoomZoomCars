@@ -111,16 +111,13 @@ public class Car : MonoBehaviour {
     {
         if(isMoving)
         {
-            Debug.Log("inside turing");
             if (turn > 0)
             {
-                Debug.Log("turing > 0");
                 rBod.transform.Rotate((rBod.transform.up * turning) * Time.deltaTime);
 
             }
             else if (turn < 0)
             {
-                Debug.Log("turning < 0");
                 rBod.transform.Rotate((rBod.transform.up * -turning) * Time.deltaTime);
             }
             direction = rBod.transform.forward;
@@ -129,7 +126,7 @@ public class Car : MonoBehaviour {
 
     void OverTurned()
     {
-        Debug.Log(rBod.transform.up.y);
+        //Debug.Log(rBod.transform.up.y);
         if(rBod.transform.up.y < 0)
         {
             StopMovment();
@@ -146,16 +143,13 @@ public class Car : MonoBehaviour {
     {
         if (other.gameObject.tag == "Checkpoint")
         {
-            Debug.Log("this is a checkpoint");
             if(pointIndex == other.GetComponent<Checkpoint>().Index)
             {
-                Debug.Log("passed it " + pointIndex);
                 pointIndex++;
             }
         }
         if(other.gameObject.tag == "Finish Line")
         {
-            Debug.Log("finish line");
             isFinished = true;
             willMove = false;
         }
@@ -177,5 +171,10 @@ public class Car : MonoBehaviour {
     {
         get { return isFinished; }
         set { isFinished = value; }
+    }
+    public int Player
+    {
+        get { return player; }
+        set { player = value; }
     }
 }
