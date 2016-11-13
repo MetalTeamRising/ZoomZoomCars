@@ -72,8 +72,6 @@
     <Compile Include="Assets\Scripts\Car.cs" />
     <Compile Include="Assets\Scripts\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GameOver.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\RaceManager.cs" />
     <Compile Include="Assets\Scripts\gui\GameOver.cs" />
     <Compile Include="Assets\Scripts\gui\MainMenu.cs" />

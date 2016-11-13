@@ -8,6 +8,8 @@ public class RaceManager : MonoBehaviour {
     GameObject[] myCars;
     Checkpoint nextPoint;
     [SerializeField]
+    GameObject[] carsColor;
+
     GameObject[] cars;
 
     GameObject[] finishedRacers;    
@@ -15,11 +17,13 @@ public class RaceManager : MonoBehaviour {
 	void Start () {
         //gotta get the checkpoints, the place where the car start
         //this gets the check points
+        cars = new GameObject[2];
         tempCheckArray = GameObject.FindGameObjectsWithTag("Checkpoint");
         CheckpointArray = new Checkpoint[tempCheckArray.Length + 1];
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
+        
       
         GameObject temp;
         for(int i = 0; i < tempCheckArray.Length; i++)
@@ -44,8 +48,12 @@ public class RaceManager : MonoBehaviour {
         //get where the car will spawn
         SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
 
+        cars[0] = carsColor[PlayerPrefs.GetInt("p1Color")];
+        cars[0].GetComponent<Car>().Player = 1;
+        cars[1] = carsColor[PlayerPrefs.GetInt("p2Color")];
+        cars[1].GetComponent<Car>().Player = 2;
         //place the car
-       for(int i = 0; i < cars.Length; i++)
+        for (int i = 0; i < cars.Length; i++)
         {
             myCars[i] = Instantiate(cars[i]);
             myCars[i].transform.position = SpawnArray[i].transform.position;
