@@ -19,8 +19,7 @@ public class Car : MonoBehaviour {
     private Quaternion ogRot;
     private int pointIndex;
     private bool isFinished = false;
-    [SerializeField]
-    int player = 1;
+    [SerializeField]int player = 1;
     string horizontal;
     string aButton;
     string bButton;
@@ -31,7 +30,6 @@ public class Car : MonoBehaviour {
         obj = gameObject;
         rBod = this.GetComponent<Rigidbody>();
         ogRot = rBod.rotation;
-
         //setting the custom buttons for the car
         horizontal = "P" + player + "_Horizontal";
         aButton = "P" + player + "_ButtonA";
@@ -89,20 +87,7 @@ public class Car : MonoBehaviour {
         }
         else
         {
-            direction = -rBod.transform.forward;
-            direction.Normalize();
-
-            accel = direction * 100;
-            accel.y = 0;
-
-            vel -= (accel * Time.deltaTime);
-            float mags = vel.magnitude;
-            if (mags > 0)
-            {
-                vel.Normalize();
-                vel = vel * 0;
-            }
-            rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
+            //turns out it decellerates automatically and my effort has been for naught
             isMoving = false;
         }
     }
