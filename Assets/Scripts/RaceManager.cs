@@ -7,8 +7,9 @@ public class RaceManager : MonoBehaviour {
     GameObject[] SpawnArray;
     GameObject[] myCars;
     Checkpoint nextPoint;
-    [SerializeField]
     GameObject[] cars;
+    [SerializeField]
+    GameObject[] carsColors;
 
     GameObject[] finishedRacers;    
 	// Use this for initialization
@@ -44,8 +45,14 @@ public class RaceManager : MonoBehaviour {
         //get where the car will spawn
         SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
 
+        //retreives the saved car information i saved in the carSelect script
+        //the index of the car prefabs in car colors has to match up with the
+        //index i put them in in the switcher prefab, which is in the prefab folder under guifabs
+        cars[0] = carsColors[PlayerPrefs.GetInt("p1Color")];
+        cars[1] = carsColors[PlayerPrefs.GetInt("p2Color")];
+
         //place the car
-       for(int i = 0; i < cars.Length; i++)
+        for (int i = 0; i < cars.Length; i++)
         {
             myCars[i] = Instantiate(cars[i]);
             myCars[i].transform.position = SpawnArray[i].transform.position;
