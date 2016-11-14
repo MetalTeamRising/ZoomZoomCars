@@ -49,6 +49,14 @@ public class Car : MonoBehaviour {
             Turn(Input.GetAxis(horizontal));
             Move();
         }
+        if (Input.GetButtonDown(select))
+        {
+            //rBod.position = new Vector3(nextPoint.transform.position.x, nextPoint.transform.position.y + 30, nextPoint.transform.position.z);
+            rBod.position = new Vector3(nextPoint.RespawnPoint.transform.position.x, nextPoint.RespawnPoint.transform.position.y, nextPoint.RespawnPoint.transform.position.z);
+            rBod.transform.forward = nextPoint.RespawnPoint.transform.forward;
+            direction = rBod.transform.forward;
+            rBod.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        }
     }
 
     void Move()
@@ -89,20 +97,6 @@ public class Car : MonoBehaviour {
         }
         else
         {
-            direction = -rBod.transform.forward;
-            direction.Normalize();
-
-            accel = direction * 100;
-            accel.y = 0;
-
-            vel -= (accel * Time.deltaTime);
-            float mags = vel.magnitude;
-            if (mags > 0)
-            {
-                vel.Normalize();
-                vel = vel * 0;
-            }
-            rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = false;
         }
     }
@@ -145,7 +139,9 @@ public class Car : MonoBehaviour {
         {
             if(pointIndex == other.GetComponent<Checkpoint>().Index)
             {
+                nextPoint = other.GetComponent<Checkpoint>();
                 pointIndex++;
+                Debug.Log("checkpoint reached");
             }
         }
         if(other.gameObject.tag == "Finish Line")

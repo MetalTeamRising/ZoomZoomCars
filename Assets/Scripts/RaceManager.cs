@@ -30,13 +30,8 @@ public class RaceManager : MonoBehaviour {
         {
             temp = GameObject.Find("checkpoint" + (i + 1));
             CheckpointArray[i] = temp.GetComponent<Checkpoint>();
-            if(i > 0)
+            if(i == 0)
             {
-                //CheckpointArray[i].IsActive = false;
-            }
-            else
-            {
-                //CheckpointArray[i].IsActive = true;
                 nextPoint = CheckpointArray[i];
             }
             CheckpointArray[i].Index = i;

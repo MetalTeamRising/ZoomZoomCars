@@ -9,6 +9,8 @@ public class Checkpoint : MonoBehaviour {
     private int checkpoint;
     bool isActive = false;
     int index;
+    [SerializeField]
+    GameObject respawnPoint;
 
 	// Use this for initialization
 	void Start () {
@@ -39,5 +41,9 @@ public class Checkpoint : MonoBehaviour {
     {
         get { return index; }
         set { index = value; }
+    }
+    public GameObject RespawnPoint
+    {
+        get { return respawnPoint; }
     }
 }
