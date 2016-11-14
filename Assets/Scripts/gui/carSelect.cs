@@ -44,8 +44,8 @@ public class carSelect : MonoBehaviour {
         back.Start();
         p1 = GameObject.Find("p1").GetComponent<selector>();
         p2 = GameObject.Find("p2").GetComponent<selector>();
-        p1.m_gameObjects[PlayerPrefs.GetInt("p1Color")].SetActive(true);
-        p2.m_gameObjects[PlayerPrefs.GetInt("p2Color")].SetActive(true);
+        p1.index = PlayerPrefs.GetInt("p1Color");
+        p2.index = PlayerPrefs.GetInt("p2Color");
     }
 
     void OnGUI()
