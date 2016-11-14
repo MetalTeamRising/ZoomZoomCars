@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoomZoomCars.CSharp", "ZoomZoomCars.CSharp.csproj", "{0ABB2BFB-5DFE-7268-3E5D-AEB6E85FB437}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{D9636BFB-8231-3809-B3C6-FCC2E9BE00A5}") = "ZoomZoomCars", "Assembly-CSharp.csproj", "{958D0ED9-B096-48D7-691A-5E01E8FEFB02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0ABB2BFB-5DFE-7268-3E5D-AEB6E85FB437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0ABB2BFB-5DFE-7268-3E5D-AEB6E85FB437}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0ABB2BFB-5DFE-7268-3E5D-AEB6E85FB437}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0ABB2BFB-5DFE-7268-3E5D-AEB6E85FB437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{958D0ED9-B096-48D7-691A-5E01E8FEFB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{958D0ED9-B096-48D7-691A-5E01E8FEFB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{958D0ED9-B096-48D7-691A-5E01E8FEFB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{958D0ED9-B096-48D7-691A-5E01E8FEFB02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
