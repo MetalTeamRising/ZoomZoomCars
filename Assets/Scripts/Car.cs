@@ -41,6 +41,7 @@ public class Car : MonoBehaviour {
         select = "P" + player + "_Select";
         start = "P" + player + "_Start";
 
+        Physics.gravity = new Vector3(0.0f, -200.0f, 0.0f);
 	}
 	
 	// Update is called once per frame
@@ -130,6 +131,7 @@ public class Car : MonoBehaviour {
             if (Input.GetButtonDown(yButton))
             {
                 rBod.rotation = new Quaternion(ogRot.x, ogRot.y, ogRot.z, ogRot.w);
+                vel = new Vector3(0.0f, 0.0f, 0.0f);
             }
         }
     }
