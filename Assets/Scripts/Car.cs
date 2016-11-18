@@ -31,7 +31,7 @@ public class Car : MonoBehaviour {
 	void Start () {
         obj = gameObject;
         rBod = this.GetComponent<Rigidbody>();
-        ogRot = rBod.rotation;
+        ogRot = new Quaternion(rBod.rotation.x, rBod.rotation.y, rBod.rotation.z, rBod.rotation.w);
 
         //setting the custom buttons for the car
         horizontal = "P" + player + "_Horizontal";
