@@ -24,20 +24,24 @@ public class Car : MonoBehaviour {
     string horizontal;
     string aButton;
     string bButton;
+    string yButton;
     string select;
     string start;
 	// Use this for initialization
 	void Start () {
         obj = gameObject;
         rBod = this.GetComponent<Rigidbody>();
-        ogRot = rBod.rotation;
+        ogRot = new Quaternion(rBod.rotation.x, rBod.rotation.y, rBod.rotation.z, rBod.rotation.w);
 
         //setting the custom buttons for the car
         horizontal = "P" + player + "_Horizontal";
         aButton = "P" + player + "_ButtonA";
         bButton = "P" + player + "_ButtonB";
+        yButton = "P" + player + "_ButtonY";
         select = "P" + player + "_Select";
         start = "P" + player + "_Start";
+
+        Physics.gravity = new Vector3(0.0f, -200.0f, 0.0f);
 	}
 	
 	// Update is called once per frame
@@ -55,6 +59,7 @@ public class Car : MonoBehaviour {
             rBod.transform.forward = nextPoint.RespawnPoint.transform.forward;
             direction = rBod.transform.forward;
             rBod.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            vel = new Vector3(0.0f, 0.0f, 0.0f);
         }
     }
 
@@ -123,7 +128,11 @@ public class Car : MonoBehaviour {
         if(rBod.transform.up.y < 0)
         {
             StopMovment();
-            rBod.rotation = new Quaternion(ogRot.x, ogRot.y, ogRot.z, ogRot.w);
+            if (Input.GetButtonDown(yButton))
+            {
+                rBod.rotation = new Quaternion(ogRot.x, ogRot.y, ogRot.z, ogRot.w);
+                vel = new Vector3(0.0f, 0.0f, 0.0f);
+            }
         }
     }
 
