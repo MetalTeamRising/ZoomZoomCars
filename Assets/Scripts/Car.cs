@@ -38,7 +38,6 @@ public class Car : MonoBehaviour {
         bButton = "P" + player + "_ButtonB";
         select = "P" + player + "_Select";
         start = "P" + player + "_Start";
-
 	}
 	
 	// Update is called once per frame

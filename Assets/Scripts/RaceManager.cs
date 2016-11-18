@@ -12,7 +12,10 @@ public class RaceManager : MonoBehaviour {
 
     GameObject[] cars;
 
-    GameObject[] finishedRacers;    
+    GameObject[] finishedRacers;
+    [SerializeField]
+    Camera[] allCamera;
+    
 	// Use this for initialization
 	void Start () {
         //gotta get the checkpoints, the place where the car start
@@ -23,8 +26,7 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
-        
-      
+
         GameObject temp;
         for(int i = 0; i < tempCheckArray.Length; i++)
         {
@@ -45,14 +47,23 @@ public class RaceManager : MonoBehaviour {
 
         cars[0] = carsColor[PlayerPrefs.GetInt("p1Color")];
         cars[0].GetComponent<Car>().Player = 1;
+        //p1Camera.transform.SetParent(cars[0].transform);
+        
         cars[1] = carsColor[PlayerPrefs.GetInt("p2Color")];
         cars[1].GetComponent<Car>().Player = 2;
+        //p2Camera.transform.SetParent(cars[1].transform);
         //place the car
         for (int i = 0; i < cars.Length; i++)
         {
             myCars[i] = Instantiate(cars[i]);
             myCars[i].transform.position = SpawnArray[i].transform.position;
-            myCars[i].transform.forward = SpawnArray[i].transform.forward;
+            myCars[i].transform.forward = SpawnArray[i].transform.forward;  
+        }
+
+        //Camera stuff
+        for(int i = 0; i < cars.Length; i++)
+        {
+            allCamera[i].transform.SetParent(myCars[i].transform);
         }
 
         RaceStart();
