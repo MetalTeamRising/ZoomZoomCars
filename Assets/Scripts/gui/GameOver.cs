@@ -157,23 +157,23 @@ public class GameOver : MonoBehaviour {
                 //load level at index one, should be set to the first level
                 Application.LoadLevel(0);
             }
-        }
-        switch (actbttn)
-        {
-            case 1:
-                GUI.Box(new Rect(lftarrw.x, tryAgain.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
-                GUI.Box(new Rect(rgtarrw.x, tryAgain.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
-                break;
-            case 2:
-                GUI.Box(new Rect(lftarrw.x, select.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
-                GUI.Box(new Rect(rgtarrw.x, select.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
-                break;
-            case 3:
-                GUI.Box(new Rect(lftarrw.x, main.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
-                GUI.Box(new Rect(rgtarrw.x, main.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
-                break;
-            default:
-                break;
+            switch (actbttn)
+            {
+                case 1:
+                    GUI.Box(new Rect(lftarrw.x, tryAgain.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
+                    GUI.Box(new Rect(rgtarrw.x, tryAgain.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
+                    break;
+                case 2:
+                    GUI.Box(new Rect(lftarrw.x, select.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
+                    GUI.Box(new Rect(rgtarrw.x, select.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
+                    break;
+                case 3:
+                    GUI.Box(new Rect(lftarrw.x, main.y + evener, lftarrw.width, lftarrw.height), lftarrw.text, lftarrw.style);
+                    GUI.Box(new Rect(rgtarrw.x, main.y + evener, rgtarrw.width, rgtarrw.height), rgtarrw.text, rgtarrw.style);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
