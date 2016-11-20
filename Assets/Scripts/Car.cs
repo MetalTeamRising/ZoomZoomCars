@@ -131,6 +131,7 @@ public class Car : MonoBehaviour {
             if (Input.GetButtonDown(yButton))
             {
                 rBod.rotation = new Quaternion(ogRot.x, ogRot.y, ogRot.z, ogRot.w);
+                rBod.rotation = Quaternion.LookRotation(direction);
                 vel = new Vector3(0.0f, 0.0f, 0.0f);
             }
         }
