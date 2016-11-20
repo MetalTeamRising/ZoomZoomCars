@@ -101,6 +101,6 @@ public class RaceManager : MonoBehaviour {
     void GameOver()
     {
         //go to game over screen or for now the main menu
-        GameObject.Find("Main Camera").GetComponent<GameOver>().lost = true;
+        GameObject.Find("Main Camera").GetComponent<GameOver>().over = true;
     }
 }
