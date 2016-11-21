@@ -47,11 +47,13 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         OverTurned();
-        if (willMove)
-        {
-            Turn(Input.GetAxis(horizontal));
-            Move();
-        }
+        //if (willMove)
+        //{
+        //    Turn(Input.GetAxis(horizontal));
+        //    Move();
+        //}
+        Turn(Input.GetAxis(horizontal));
+        Move();
         if (Input.GetButtonDown(select))
         {
             //rBod.position = new Vector3(nextPoint.transform.position.x, nextPoint.transform.position.y + 30, nextPoint.transform.position.z);
@@ -67,6 +69,7 @@ public class Car : MonoBehaviour {
     {
         if (Input.GetButton(bButton)) 
         {
+            Debug.Log("Going backwards");
             direction = rBod.transform.forward;
             direction.Normalize();
 
@@ -82,8 +85,9 @@ public class Car : MonoBehaviour {
             rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
-        else if(Input.GetButton(aButton))
+        if(Input.GetButton(aButton))
         {
+            Debug.Log("Going forwards");
             direction = rBod.transform.forward;
             direction.Normalize();
 
@@ -99,10 +103,10 @@ public class Car : MonoBehaviour {
             rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
-        else
-        {
-            isMoving = false;
-        }
+        //else
+        //{
+        //    isMoving = false;
+        //}
     }
 
     void Turn(float turn)
@@ -153,10 +157,14 @@ public class Car : MonoBehaviour {
                 Debug.Log("checkpoint reached");
             }
         }
-        if(other.gameObject.tag == "Finish Line")
+        else if(other.gameObject.tag == "Finish Line")
         {
-            isFinished = true;
-            willMove = false;
+            int test = other.GetComponent<Checkpoint>().Index;
+            if(pointIndex == other.GetComponent<Checkpoint>().Index)
+            {
+                isFinished = true;
+                willMove = false;
+            }
         }
     }
 

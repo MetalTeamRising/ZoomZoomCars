@@ -25,6 +25,8 @@ public class GameOver : MonoBehaviour {
     private string[] verticals = new string[4];
     private string[] aButtons = new string[4];
 
+    bool isActive = false;
+
     void Start()
     {
         tryAgain.Start();
@@ -45,31 +47,72 @@ public class GameOver : MonoBehaviour {
     void Update()
     {
 
-        for (int i = 0; i < 4; i++)
+        if (isActive)
         {
-            if (Input.GetButtonDown(aButtons[i]))
+            for (int i = 0; i < 4; i++)
             {
-                switch (actbttn)
+                if (Input.GetButtonDown(aButtons[i]))
                 {
-                    case 1:
-                        Application.LoadLevel(1);
-                        break;
-                    case 2:
-                        Application.LoadLevel(2);
-                        break;
-                    case 3:
-                        Application.LoadLevel(0);
-                        break;
-                    default:
-                        break;
+                    switch (actbttn)
+                    {
+                        case 1:
+                            Application.LoadLevel(1);
+                            break;
+                        case 2:
+                            Application.LoadLevel(2);
+                            break;
+                        case 3:
+                            Application.LoadLevel(0);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            if (Input.GetAxis(verticals[i]) < -0.5)
-            {
-                rchDn[i] = true;
-                if (rchDn[i])
+                if (Input.GetAxis(verticals[i]) < -0.5)
                 {
-                    if (timer[i] > maxTimer)
+                    rchDn[i] = true;
+                    if (rchDn[i])
+                    {
+                        if (timer[i] > maxTimer)
+                        {
+                            if (actbttn > 1)
+                            {
+                                actbttn--;
+                            }
+                            else
+                            {
+                                actbttn = 3;
+                            }
+                            tmHt[i] = true;
+                            timer[i] = 0;
+                        }
+                        timer[i] = timer[i] + Time.deltaTime;
+                    }
+                }
+                else if (Input.GetAxis(verticals[i]) > 0.5)
+                {
+                    rchUp[i] = true;
+                    if (rchUp[i])
+                    {
+                        if (timer[i] > maxTimer)
+                        {
+                            if (actbttn < 3)
+                            {
+                                actbttn++;
+                            }
+                            else
+                            {
+                                actbttn = 1;
+                            }
+                            tmHt[i] = true;
+                            timer[i] = 0;
+                        }
+                        timer[i] = timer[i] + Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    if (!tmHt[i] && rchDn[i])
                     {
                         if (actbttn > 1)
                         {
@@ -79,18 +122,8 @@ public class GameOver : MonoBehaviour {
                         {
                             actbttn = 3;
                         }
-                        tmHt[i] = true;
-                        timer[i] = 0;
                     }
-                    timer[i] = timer[i] + Time.deltaTime;
-                }
-            }
-            else if (Input.GetAxis(verticals[i]) > 0.5)
-            {
-                rchUp[i] = true;
-                if (rchUp[i])
-                {
-                    if (timer[i] > maxTimer)
+                    if (!tmHt[i] && rchUp[i])
                     {
                         if (actbttn < 3)
                         {
@@ -100,40 +133,12 @@ public class GameOver : MonoBehaviour {
                         {
                             actbttn = 1;
                         }
-                        tmHt[i] = true;
-                        timer[i] = 0;
                     }
-                    timer[i] = timer[i] + Time.deltaTime;
+                    rchDn[i] = false;
+                    rchUp[i] = false;
+                    tmHt[i] = false;
+                    timer[i] = 0;
                 }
-            }
-            else
-            {
-                if (!tmHt[i] && rchDn[i])
-                {
-                    if (actbttn > 1)
-                    {
-                        actbttn--;
-                    }
-                    else
-                    {
-                        actbttn = 3;
-                    }
-                }
-                if (!tmHt[i] && rchUp[i])
-                {
-                    if (actbttn < 3)
-                    {
-                        actbttn++;
-                    }
-                    else
-                    {
-                        actbttn = 1;
-                    }
-                }
-                rchDn[i] = false;
-                rchUp[i] = false;
-                tmHt[i] = false;
-                timer[i] = 0;
             }
         }
     }
@@ -176,6 +181,11 @@ public class GameOver : MonoBehaviour {
             }
         }
 
+    }
+
+    public bool IsActive
+    {
+        set { isActive = value; }
     }
 }
 

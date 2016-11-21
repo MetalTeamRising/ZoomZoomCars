@@ -92,17 +92,20 @@ public class carSelect : MonoBehaviour {
         {
             if (Input.GetButtonDown(aButtons[i]))
             {
+                Debug.Log("pressing a");
                 //load level at index one, should be set to the first race
                 Application.LoadLevel(1);
             }
             if (Input.GetButtonDown(bButtons[i]))
             {
+                Debug.Log("pressing b");
                 //load level at index zero, should be set to menu
                 Application.LoadLevel(0);
             }
 
             if (Input.GetAxis(horizontals[i]) < -0.5)
             {
+                Debug.Log("going left");
                 rchLft[i] = true;
                 if (rchLft[i])
                 {
@@ -118,6 +121,7 @@ public class carSelect : MonoBehaviour {
             }
             else if (Input.GetAxis(horizontals[i]) > 0.5)
             {
+                Debug.Log("going right");
                 rchRht[i] = true;
                 if(rchRht[i])
                 {

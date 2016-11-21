@@ -20,7 +20,7 @@ public class RaceManager : MonoBehaviour {
 	void Start () {
         //gotta get the checkpoints, the place where the car start
         //this gets the check points
-        cars = new GameObject[2];
+        cars = new GameObject[4];
         tempCheckArray = GameObject.FindGameObjectsWithTag("Checkpoint");
         CheckpointArray = new Checkpoint[tempCheckArray.Length + 1];
         SpawnArray = new GameObject[cars.Length];
@@ -41,6 +41,7 @@ public class RaceManager : MonoBehaviour {
         temp = GameObject.FindGameObjectWithTag("Finish Line");
         CheckpointArray[CheckpointArray.Length - 1] = temp.GetComponent<Checkpoint>();
         CheckpointArray[CheckpointArray.Length - 1].IsActive = false;
+        CheckpointArray[CheckpointArray.Length - 1].Index = CheckpointArray.Length - 1;
 
         //get where the car will spawn
         SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
@@ -52,6 +53,13 @@ public class RaceManager : MonoBehaviour {
         cars[1] = carsColor[PlayerPrefs.GetInt("p2Color")];
         cars[1].GetComponent<Car>().Player = 2;
         //p2Camera.transform.SetParent(cars[1].transform);
+
+        cars[2] = carsColor[PlayerPrefs.GetInt("p3Color")];
+        cars[2].GetComponent<Car>().Player = 3;
+        //p1Camera.transform.SetParent(cars[0].transform);
+
+        cars[3] = carsColor[PlayerPrefs.GetInt("p4Color")];
+        cars[3].GetComponent<Car>().Player = 4;
         //place the car
         for (int i = 0; i < cars.Length; i++)
         {
@@ -65,7 +73,7 @@ public class RaceManager : MonoBehaviour {
         {
             allCamera[i].transform.SetParent(myCars[i].transform);
         }
-
+       
         RaceStart();
     }
 	
@@ -112,6 +120,7 @@ public class RaceManager : MonoBehaviour {
     void GameOver()
     {
         //go to game over screen or for now the main menu
+        GameObject.Find("Main Camera").GetComponent<GameOver>().IsActive = true;
         GameObject.Find("Main Camera").GetComponent<GameOver>().over = true;
     }
 }
