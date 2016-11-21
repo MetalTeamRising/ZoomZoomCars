@@ -8,6 +8,7 @@ public class Checkpoint : MonoBehaviour {
     Collision col;
     private int checkpoint;
     bool isActive = false;
+    [SerializeField]
     int index;
     [SerializeField]
     GameObject respawnPoint;

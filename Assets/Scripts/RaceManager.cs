@@ -143,6 +143,7 @@ public class RaceManager : MonoBehaviour {
                 break;
             }
             gameOver = true;
+            break;
         }
 
         if (gameOver)
