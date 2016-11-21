@@ -47,13 +47,11 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         OverTurned();
-        //if (willMove)
-        //{
-        //    Turn(Input.GetAxis(horizontal));
-        //    Move();
-        //}
-        Turn(Input.GetAxis(horizontal));
-        Move();
+        if (willMove)
+        {
+            Turn(Input.GetAxis(horizontal));
+            Move();
+        }
         if (Input.GetButtonDown(select))
         {
             //rBod.position = new Vector3(nextPoint.transform.position.x, nextPoint.transform.position.y + 30, nextPoint.transform.position.z);
