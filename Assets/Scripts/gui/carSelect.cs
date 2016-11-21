@@ -56,7 +56,7 @@ public class carSelect : MonoBehaviour {
     void Start ()
     {
 
-        for(int i = 0; i <4;i++)
+        for(int i = 0; i < 4;i++)
         {
             horizontals[i] = "P" + (int)(i + 1) + "_Horizontal";
             aButtons[i] = "P" + (int)(i + 1) + "_ButtonA";

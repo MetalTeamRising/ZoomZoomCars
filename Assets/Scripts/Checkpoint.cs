@@ -23,14 +23,6 @@ public class Checkpoint : MonoBehaviour {
 	
 	}
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "Car" && isActive)
-    //    {
-    //        Debug.Log("checkpoint hit " + index);
-    //        //isActive = false;
-    //    }
-    //}
     public bool IsActive
     {
         get { return isActive; }
