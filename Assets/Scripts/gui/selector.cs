@@ -27,6 +27,7 @@ public class selector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_gameObjects[index].SetActive(true);
         // Rotate the object around its local X axis at 1 degree per second
         transform.Rotate(Vector3.up * Time.deltaTime * 30);
     }

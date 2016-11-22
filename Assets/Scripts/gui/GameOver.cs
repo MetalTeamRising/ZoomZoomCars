@@ -47,7 +47,7 @@ public class GameOver : MonoBehaviour {
     void Update()
     {
 
-        if (isActive)
+        if (over)
         {
             for (int i = 0; i < 4; i++)
             {
