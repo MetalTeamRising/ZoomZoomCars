@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class RaceManager : MonoBehaviour {
@@ -28,6 +29,12 @@ public class RaceManager : MonoBehaviour {
     //setting the cameras for 4 players
     Vector4[] numPlayerFour;
 
+    float currentTime;
+
+    //get all the canvases in the screen to put the countdown on and what player they are
+    [SerializeField]
+    Text[] playerText;
+
     // Use this for initialization
     void Start () {
         //gotta get the checkpoints, the place where the car start
@@ -38,6 +45,7 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
+        playerText = new Text[4];
 
         numPlayersTwo = new Vector4[2];
         numPlayersTwo[0] = new Vector4(0, 0, 0.5f, 1f);
@@ -115,13 +123,12 @@ public class RaceManager : MonoBehaviour {
                 allCamera[i].rect = new Rect(numPlayerFour[i].x, numPlayerFour[i].y, numPlayerFour[i].z, numPlayerFour[i].w);
             }
         }
-       
-        RaceStart();
+        currentTime = 3.0f;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        RaceStartCountDown();
         //looping through all the cars and seeing if it has finished
         for(int i = 0; i < Input.GetJoystickNames().Length; i++)
         {
@@ -164,5 +171,23 @@ public class RaceManager : MonoBehaviour {
     {
         //go to game over screen or for now the main menu
         GameObject.Find("Main Camera").GetComponent<GameOver>().over = true;
+    }
+
+    void RaceStartCountDown()
+    {
+        if(currentTime >= 0)
+        {
+            currentTime -= Time.deltaTime;
+            Debug.Log(currentTime);
+            int temp = (int)currentTime;
+            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                playerText[i].text = temp.ToString();
+            }
+            if (currentTime < 0)
+            {
+                RaceStart();
+            }
+        }
     }
 }

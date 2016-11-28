@@ -11,7 +11,7 @@ public class Car : MonoBehaviour {
     [SerializeField]private float speed = 99.0f;
     [SerializeField]private float turning = 45;
     private bool isMoving = false;
-    public bool willMove = false;
+    public bool willMove;
     private Vector3 accel;
     private Vector3 direction;
     private Vector3 vel;
@@ -42,12 +42,13 @@ public class Car : MonoBehaviour {
         start = "P" + player + "_Start";
 
         Physics.gravity = new Vector3(0.0f, -200.0f, 0.0f);
+        willMove = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         OverTurned();
-        if (willMove)
+        if (willMove == true)
         {
             Turn(Input.GetAxis(horizontal));
             Move();
