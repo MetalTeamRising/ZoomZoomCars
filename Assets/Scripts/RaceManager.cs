@@ -34,6 +34,7 @@ public class RaceManager : MonoBehaviour {
     //get all the canvases in the screen to put the countdown on and what player they are
     [SerializeField]
     Text[] playerText;
+    bool started = false;
 
     // Use this for initialization
     void Start () {
@@ -45,7 +46,6 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
-        playerText = new Text[4];
 
         numPlayersTwo = new Vector4[2];
         numPlayersTwo[0] = new Vector4(0, 0, 0.5f, 1f);
@@ -128,7 +128,25 @@ public class RaceManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaceStartCountDown();
+        if (!started)
+        {
+            RaceStartCountDown();
+        }
+        else
+        {
+            for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                if (currentTime <= 2.0f)
+                {
+                    playerText[i].text = "GO!";
+                    currentTime += Time.deltaTime;
+                }
+                else
+                {
+                    playerText[i].gameObject.SetActive(false);
+                }
+            }
+        }
         //looping through all the cars and seeing if it has finished
         for(int i = 0; i < Input.GetJoystickNames().Length; i++)
         {
@@ -166,6 +184,7 @@ public class RaceManager : MonoBehaviour {
         {
             myCars[i].GetComponent<Car>().willMove = true;
         }
+        started = true;
     }
     void GameOver()
     {
@@ -178,15 +197,22 @@ public class RaceManager : MonoBehaviour {
         if(currentTime >= 0)
         {
             currentTime -= Time.deltaTime;
-            Debug.Log(currentTime);
-            int temp = (int)currentTime;
-            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
-            {
-                playerText[i].text = temp.ToString();
-            }
+            int temp = (int)currentTime + 1;
             if (currentTime < 0)
             {
+                for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+                {
+                    playerText[i].text = "GO!";
+                    currentTime = 0;
+                }
                 RaceStart();
+            }
+            else
+            {
+                for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+                {
+                    playerText[i].text = temp.ToString();
+                }
             }
         }
     }
