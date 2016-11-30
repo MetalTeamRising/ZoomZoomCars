@@ -14,7 +14,7 @@ public class Checkpoint : MonoBehaviour {
     GameObject respawnPoint;
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
         collide = this.GetComponent<Collider>();
         //checkpoint = 0;
 	}

@@ -160,6 +160,7 @@ public class Car : MonoBehaviour {
         {
             if(pointIndex == GameObject.Find("Finish line").GetComponent<Checkpoint>().Index)
             {
+                GameObject.Find("Finish line").GetComponent<FinishLine>().UpdateFinished(this);
                 isFinished = true;
                 willMove = false;
             }

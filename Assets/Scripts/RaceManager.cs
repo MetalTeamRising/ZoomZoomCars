@@ -30,6 +30,7 @@ public class RaceManager : MonoBehaviour {
     Vector4[] numPlayerFour;
 
     float currentTime;
+    float gameOverTimer = 0;
 
     //get all the canvases in the screen to put the countdown on and what player they are
     [SerializeField]
@@ -141,9 +142,14 @@ public class RaceManager : MonoBehaviour {
                     playerText[i].text = "GO!";
                     currentTime += Time.deltaTime;
                 }
-                else
+                else if(currentTime > 2.0f && !myCars[i].GetComponent<Car>().IsFinished)
                 {
                     playerText[i].gameObject.SetActive(false);
+                }
+                else if (currentTime > 2.0f && myCars[i].GetComponent<Car>().IsFinished)
+                {
+                    playerText[i].gameObject.SetActive(true);
+                    playerText[i].text = "FINISHED";
                 }
             }
         }
@@ -160,21 +166,21 @@ public class RaceManager : MonoBehaviour {
         }
         bool gameOver = false;
         //check to see if all the racers are done racing
-        for(int i = 0; i < finishedRacers.Length; i++)
+        int index = GameObject.Find("Finish line").GetComponent<FinishLine>().CurrentIndex;
+        if (index == Input.GetJoystickNames().Length)
         {
-            if(finishedRacers[i] == null)
-            {
-                gameOver = false;
-                break;
-            }
             gameOver = true;
-            break;
         }
 
-        if (gameOver)
+        if (gameOver && gameOverTimer >= 2.0)
         {
-            Debug.Log("player " + finishedRacers[0].GetComponent<Car>().Player + " finished first");
+            //Debug.Log("player " + finishedRacers[0].GetComponent<Car>().Player + " finished first");
             GameOver();
+        }
+        else if(gameOver && gameOverTimer < 2.0)
+        {
+            gameOverTimer += Time.deltaTime;
+            Debug.Log(gameOverTimer);
         }
 	}
     void RaceStart()
