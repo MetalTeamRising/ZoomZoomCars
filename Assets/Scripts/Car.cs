@@ -66,13 +66,14 @@ public class Car : MonoBehaviour {
 
     void Move()
     {
+        direction = rBod.transform.forward;
         if (Input.GetButton(bButton)) 
         {
             Debug.Log("Going backwards");
             direction = rBod.transform.forward;
             direction.Normalize();
 
-            accel = direction * 100;
+            accel = direction * 1000;
             accel.y = 0;
 
             vel += (accel * Time.deltaTime);
@@ -90,7 +91,7 @@ public class Car : MonoBehaviour {
             direction = rBod.transform.forward;
             direction.Normalize();
 
-            accel = direction * 100;
+            accel = direction * 1000;
             accel.y = 0;
 
             vel -= (accel * Time.deltaTime);
@@ -102,10 +103,6 @@ public class Car : MonoBehaviour {
             rBod.velocity = new Vector3(vel.x, rBod.velocity.y, vel.z);
             isMoving = true;
         }
-        //else
-        //{
-        //    isMoving = false;
-        //}
     }
 
     void Turn(float turn)
