@@ -8,7 +8,8 @@ public class carSelect : MonoBehaviour {
     private bool[] rchLft = {false, false, false, false};
     private bool[] rchRht = { false, false, false, false };
     private bool[] tmHt = { false, false, false, false };
-
+    public int players = 0;
+    private bool playerNumChange = false;
 
     [SerializeField]
     private guiSpot choose;
@@ -18,6 +19,12 @@ public class carSelect : MonoBehaviour {
 
     [SerializeField]
     private guiSpot back;
+
+    [SerializeField]
+    private guiSpot lone;
+
+    [SerializeField]
+    private guiSpot none;
 
 
     [Header("P1(Top Left)")]
@@ -55,8 +62,7 @@ public class carSelect : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-
-        for(int i = 0; i < Input.GetJoystickNames().Length;i++)
+        for (int i = 0; i < 4;i++)
         {
             horizontals[i] = "P" + (int)(i + 1) + "_Horizontal";
             aButtons[i] = "P" + (int)(i + 1) + "_ButtonA";
@@ -69,12 +75,15 @@ public class carSelect : MonoBehaviour {
 
 
         choose.Start();
+        play.Start();
+        back.Start();
+        lone.Start();
+        none.Start();
+        /*
         TLback.Start();
         TLnext.Start();
         TRback.Start();
         TRnext.Start();
-        play.Start();
-        back.Start();
         BLback.Start();
         BLnext.Start();
         BRback.Start();
@@ -83,12 +92,74 @@ public class carSelect : MonoBehaviour {
         TRCont.Start();
         BLCont.Start();
         BRCont.Start();
+        */
     }
 
 
     void Update()
     {
-        for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+        if(players!= Input.GetJoystickNames().Length)
+        {
+            players = Input.GetJoystickNames().Length;
+            playerNumChange = true;
+        }
+        //only goes through the switch statement if the amount of players changes
+        if (true)
+        {
+            switch (players)
+            {
+                case 0:
+                    selectors[0].gameObject.SetActive(false);
+                    selectors[1].gameObject.SetActive(false);
+                    selectors[2].gameObject.SetActive(false);
+                    selectors[3].gameObject.SetActive(false);
+                    break;
+                case 1:
+                    selectors[0].gameObject.SetActive(true);
+                    selectors[0].gameObject.transform.position = new Vector3(0, 0, 0);
+                    selectors[0].gameObject.transform.localScale = new Vector3(2, 2, 2);
+                    selectors[1].gameObject.SetActive(false);
+                    selectors[2].gameObject.SetActive(false);
+                    selectors[3].gameObject.SetActive(false);
+                    break;
+                case 2:
+                    selectors[0].gameObject.SetActive(true);
+                    selectors[0].gameObject.transform.position = new Vector3(-3, 0, 0);
+                    selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                    selectors[1].gameObject.SetActive(true);
+                    selectors[1].gameObject.transform.position = new Vector3(3, 0, 0);
+                    selectors[2].gameObject.SetActive(false);
+                    selectors[3].gameObject.SetActive(false);
+                    break;
+                case 3:
+                    selectors[0].gameObject.SetActive(true);
+                    selectors[0].gameObject.transform.position = new Vector3(-3, 2.5f, 0);
+                    selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                    selectors[1].gameObject.SetActive(true);
+                    selectors[1].gameObject.transform.position = new Vector3(3, 2.5f, 0);
+                    selectors[2].gameObject.SetActive(true);
+                    selectors[2].gameObject.transform.position = new Vector3(0, -0.6f, 0);
+                    selectors[3].gameObject.SetActive(false);
+                    break;
+                case 4:
+                    selectors[0].gameObject.SetActive(true);
+                    selectors[0].gameObject.transform.position = new Vector3(-3, 2.5f, 0);
+                    selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                    selectors[1].gameObject.SetActive(true);
+                    selectors[1].gameObject.transform.position = new Vector3(3, 2.5f, 0);
+                    selectors[2].gameObject.SetActive(true);
+                    selectors[2].gameObject.transform.position = new Vector3(-3, -0.6f, 0);
+                    selectors[3].gameObject.SetActive(true);
+                    selectors[3].gameObject.transform.position = new Vector3(3, -0.6f, 0);
+                    break;
+                default:
+
+                    break;
+            }
+            playerNumChange = false;
+        }
+
+        for (int i = 0; i < players; i++)
         {
             if (Input.GetButtonDown(aButtons[i]))
             {
@@ -161,6 +232,21 @@ public class carSelect : MonoBehaviour {
     {
         GUI.Box(new Rect(choose.x, choose.y, choose.width, choose.height), choose.text, choose.style);
         
+        //shows text if based on amount of people plugged in
+        switch (players)
+        {
+            case 0:
+                GUI.Box(new Rect(none.x, none.y, none.width, none.height), none.text, none.style);
+                break;
+            case 1:
+                GUI.Box(new Rect(lone.x, lone.y, lone.width, lone.height), lone.text, lone.style);
+                break;
+            default:
+
+                break;
+        }
+
+
         if (GUI.Button(new Rect(back.x, back.y, back.width, back.height), back.text, back.style))
         {
             //load level at index one, should be set to the first level
