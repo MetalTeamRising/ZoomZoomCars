@@ -5,7 +5,7 @@ using System.Collections;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (Collider))]
 public class Car : MonoBehaviour {
-
+    private AudioSource vroom;
     private GameObject obj;
     private Rigidbody rBod;
     [SerializeField]private float speed = 99.0f;
@@ -33,8 +33,9 @@ public class Car : MonoBehaviour {
         rBod = this.GetComponent<Rigidbody>();
         ogRot = new Quaternion(rBod.rotation.x, rBod.rotation.y, rBod.rotation.z, rBod.rotation.w);
 
-        //setting the custom buttons for the car
-        horizontal = "P" + player + "_Horizontal";
+         vroom = this.GetComponent<AudioSource>();
+    //setting the custom buttons for the car
+    horizontal = "P" + player + "_Horizontal";
         aButton = "P" + player + "_ButtonA";
         bButton = "P" + player + "_ButtonB";
         yButton = "P" + player + "_ButtonY";
@@ -62,6 +63,7 @@ public class Car : MonoBehaviour {
             rBod.velocity = new Vector3(0.0f, 0.0f, 0.0f);
             vel = new Vector3(0.0f, 0.0f, 0.0f);
         }
+        vroom.volume = (rBod.velocity.magnitude / speed)/10;
     }
 
     void Move()
