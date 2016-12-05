@@ -35,7 +35,7 @@ public class SelectTrack : MonoBehaviour {
 
         if (howto.activeSelf)
         {
-            if(time >= 3)
+            if(time >= 6)
             {
                 if (Input.GetButton("P1_ButtonA"))
                 {
@@ -55,11 +55,12 @@ public class SelectTrack : MonoBehaviour {
                             break;
                     }
                 }
-                else
+               
+            }
+            else
                 {
                     time += 1.0f;
                 }
-            }
         }
         moveController();
         for(int i = 0; i < 4; i++)
