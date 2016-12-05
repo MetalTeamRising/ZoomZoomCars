@@ -165,7 +165,7 @@ public class carSelect : MonoBehaviour {
             {
                 Debug.Log("pressing a");
                 //load level at index one, should be set to the first race
-                Application.LoadLevel(1);
+                Application.LoadLevel(3);
             }
             if (Input.GetButtonDown(bButtons[i]))
             {

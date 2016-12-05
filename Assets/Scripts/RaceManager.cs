@@ -149,7 +149,7 @@ public class RaceManager : MonoBehaviour {
                 else if (currentTime > 2.0f && myCars[i].GetComponent<Car>().IsFinished)
                 {
                     playerText[i].gameObject.SetActive(true);
-                    playerText[i].text = "FINISHED";
+                    playerText[i].text = "FINISH";
                 }
             }
         }

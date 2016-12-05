@@ -11,11 +11,14 @@ public class SelectTrack : MonoBehaviour {
     [SerializeField]
     GameObject[] holder;
 
+    [SerializeField]
+    GameObject howto;
+
     bool[] isActive;
     int current = 0;
     float prevH = 0;
     float prevV = 0;
-
+    float time = 0;
     Random rng = new Random();
 
     // Use this for initialization
@@ -30,6 +33,34 @@ public class SelectTrack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (howto.activeSelf)
+        {
+            if(time >= 3)
+            {
+                if (Input.GetButton("P1_ButtonA"))
+                {
+                    switch (current)
+                    {
+                        case 0:
+                            Application.LoadLevel(1);
+                            break;
+                        case 1:
+                            Application.LoadLevel(4);
+                            break;
+                        case 2:
+                            Application.LoadLevel(5);
+                            break;
+                        case 3:
+                            Application.LoadLevel(Random.Range(0, 4));
+                            break;
+                    }
+                }
+                else
+                {
+                    time += 1.0f;
+                }
+            }
+        }
         moveController();
         for(int i = 0; i < 4; i++)
         {
@@ -125,21 +156,7 @@ public class SelectTrack : MonoBehaviour {
         prevV = Input.GetAxis("P1_Vertical");
         if (Input.GetButton("P1_ButtonA"))
         {
-            switch (current)
-            {
-                case 0:
-                    Application.LoadLevel(1);
-                    break;
-                case 1:
-                    Application.LoadLevel(4);
-                    break;
-                case 2:
-                    Application.LoadLevel(5);
-                    break;
-                case 3:
-                    Application.LoadLevel(Random.Range(0,4));
-                    break;
-            }
+            howto.SetActive(true);
         }
 
         Debug.Log(current);
