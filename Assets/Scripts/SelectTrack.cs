@@ -35,7 +35,7 @@ public class SelectTrack : MonoBehaviour {
 
         if (howto.activeSelf)
         {
-            if(time >= 6)
+            if(time >= 3)
             {
                 if (Input.GetButton("P1_ButtonA"))
                 {
@@ -161,6 +161,10 @@ public class SelectTrack : MonoBehaviour {
         if (Input.GetButton("P1_ButtonA"))
         {
             howto.SetActive(true);
+        }
+        if (Input.GetButton("P1_ButtonB"))
+        {
+            Application.LoadLevel(2);
         }
 
         Debug.Log(current);
