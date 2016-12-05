@@ -51,7 +51,10 @@ public class SelectTrack : MonoBehaviour {
                             Application.LoadLevel(5);
                             break;
                         case 3:
-                            Application.LoadLevel(Random.Range(0, 4));
+                            int temp = Random.Range(0, 4);
+                            if(temp == 0) { Application.LoadLevel(1); }
+                            else if(temp == 1) { Application.LoadLevel(4); }
+                            else if(temp == 2) { Application.LoadLevel(5); }
                             break;
                     }
                 }

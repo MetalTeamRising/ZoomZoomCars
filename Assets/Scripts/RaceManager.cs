@@ -16,6 +16,8 @@ public class RaceManager : MonoBehaviour {
     GameObject[] finishedRacers;
     [SerializeField]
     Camera[] allCamera;
+    [SerializeField]
+    Sprite[] getReady;
 
     //setting the camera for 1 player
     int rectPos = 0;
@@ -34,7 +36,7 @@ public class RaceManager : MonoBehaviour {
 
     //get all the canvases in the screen to put the countdown on and what player they are
     [SerializeField]
-    Text[] playerText;
+    GameObject[] playerCount;
     bool started = false;
 
     // Use this for initialization
@@ -139,17 +141,17 @@ public class RaceManager : MonoBehaviour {
             {
                 if (currentTime <= 2.0f)
                 {
-                    playerText[i].text = "GO!";
+                    playerCount[i].GetComponent<Image>().sprite = getReady[0];
                     currentTime += Time.deltaTime;
                 }
                 else if(currentTime > 2.0f && !myCars[i].GetComponent<Car>().IsFinished)
                 {
-                    playerText[i].gameObject.SetActive(false);
+                    playerCount[i].gameObject.SetActive(false);
                 }
                 else if (currentTime > 2.0f && myCars[i].GetComponent<Car>().IsFinished)
                 {
-                    playerText[i].gameObject.SetActive(true);
-                    playerText[i].text = "FINISH";
+                    playerCount[i].gameObject.SetActive(true);
+                    playerCount[i].GetComponent<Image>().sprite = getReady[4];
                 }
             }
         }
@@ -208,7 +210,7 @@ public class RaceManager : MonoBehaviour {
             {
                 for(int i = 0; i < Input.GetJoystickNames().Length; i++)
                 {
-                    playerText[i].text = "GO!";
+                    playerCount[i].GetComponent<Image>().sprite = getReady[0];
                     currentTime = 0;
                 }
                 RaceStart();
@@ -217,7 +219,7 @@ public class RaceManager : MonoBehaviour {
             {
                 for (int i = 0; i < Input.GetJoystickNames().Length; i++)
                 {
-                    playerText[i].text = temp.ToString();
+                    playerCount[i].GetComponent<Image>().sprite = getReady[temp];
                 }
             }
         }
