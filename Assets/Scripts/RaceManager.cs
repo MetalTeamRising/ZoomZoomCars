@@ -11,6 +11,7 @@ public class RaceManager : MonoBehaviour {
     [SerializeField]
     GameObject[] carsColor;
 
+    private int players;
     GameObject[] cars;
 
     GameObject[] finishedRacers;
@@ -49,6 +50,7 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
+        players = PlayerPrefs.GetInt("players");
 
         numPlayersTwo = new Vector4[2];
         numPlayersTwo[0] = new Vector4(0, 0, 0.5f, 1f);
@@ -84,13 +86,13 @@ public class RaceManager : MonoBehaviour {
         //get where the car will spawn
         SpawnArray = GameObject.FindGameObjectsWithTag("Spawn");
 
-        for(int i = 1; i <= Input.GetJoystickNames().Length; i++)
+        for(int i = 1; i <= players; i++)
         {
             cars[i - 1] = carsColor[PlayerPrefs.GetInt("p" + i + "Color")];
             cars[i-1].GetComponent<Car>().Player = i;
         }
         //place the car
-        for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+        for (int i = 0; i < players; i++)
         {
             myCars[i] = Instantiate(cars[i]);
             myCars[i].transform.position = SpawnArray[i].transform.position;
@@ -98,17 +100,17 @@ public class RaceManager : MonoBehaviour {
         }
         
         //Camera stuff
-        for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+        for(int i = 0; i < players; i++)
         {
             allCamera[i].transform.SetParent(myCars[i].transform);
-            if (Input.GetJoystickNames().Length == 1)
+            if (players == 1)
             {
                 allCamera[i].rect = new Rect(rectPos, rectPos, rectSize, rectSize);
                 allCamera[1].gameObject.SetActive(false);
                 allCamera[2].gameObject.SetActive(false);
                 allCamera[3].gameObject.SetActive(false);
             }
-            else if (Input.GetJoystickNames().Length == 2)
+            else if (players == 2)
             {
                 allCamera[i].rect = new Rect(numPlayersTwo[i].x, numPlayersTwo[i].y, numPlayersTwo[i].z, numPlayersTwo[i].w);
                 allCamera[i].fieldOfView = view2;
@@ -116,12 +118,12 @@ public class RaceManager : MonoBehaviour {
                 allCamera[2].gameObject.SetActive(false);
                 allCamera[3].gameObject.SetActive(false);
             }
-            else if (Input.GetJoystickNames().Length == 3)
+            else if (players == 3)
             {
                 allCamera[i].rect = new Rect(numPlayerThree[i].x, numPlayerThree[i].y, numPlayerThree[i].z, numPlayerThree[i].w);
                 allCamera[3].gameObject.SetActive(false);
             }
-            else if(Input.GetJoystickNames().Length == 4)
+            else if(players == 4)
             {
                 allCamera[i].rect = new Rect(numPlayerFour[i].x, numPlayerFour[i].y, numPlayerFour[i].z, numPlayerFour[i].w);
             }
@@ -137,7 +139,7 @@ public class RaceManager : MonoBehaviour {
         }
         else
         {
-            for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+            for(int i = 0; i < players; i++)
             {
                 if (currentTime <= 2.0f)
                 {
@@ -156,9 +158,9 @@ public class RaceManager : MonoBehaviour {
             }
         }
         //looping through all the cars and seeing if it has finished
-        for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+        for(int i = 0; i < players; i++)
         {
-            for(int x = 0; x < Input.GetJoystickNames().Length; x++)
+            for(int x = 0; x < players; x++)
             {
                 if (myCars[i].GetComponent<Car>().IsFinished)
                 {
@@ -169,7 +171,7 @@ public class RaceManager : MonoBehaviour {
         bool gameOver = false;
         //check to see if all the racers are done racing
         int index = GameObject.Find("Finish line").GetComponent<FinishLine>().CurrentIndex;
-        if (index == Input.GetJoystickNames().Length)
+        if (index == players)
         {
             gameOver = true;
         }
@@ -188,7 +190,7 @@ public class RaceManager : MonoBehaviour {
     void RaceStart()
     {
         //countdown, lets the car go
-        for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+        for(int i = 0; i < players; i++)
         {
             myCars[i].GetComponent<Car>().willMove = true;
         }
@@ -208,7 +210,7 @@ public class RaceManager : MonoBehaviour {
             int temp = (int)currentTime + 1;
             if (currentTime < 0)
             {
-                for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+                for(int i = 0; i < players; i++)
                 {
                     playerCount[i].GetComponent<Image>().sprite = getReady[0];
                     currentTime = 0;
@@ -217,7 +219,7 @@ public class RaceManager : MonoBehaviour {
             }
             else
             {
-                for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+                for (int i = 0; i < players; i++)
                 {
                     playerCount[i].GetComponent<Image>().sprite = getReady[temp];
                 }

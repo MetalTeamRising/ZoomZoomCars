@@ -3,22 +3,24 @@ using System.Collections;
 
 public class carSelect : MonoBehaviour {
 
+
+    //enum for controlling screen
+    private enum slctrTyp { bck, slct, frwrd };
+
+    private slctrTyp[] slctrTyps = { slctrTyp.bck, slctrTyp.bck, slctrTyp.bck, slctrTyp.bck };
     private float[] timer = { 0,0,0,0 };
     private float maxTimer = .5f;
     private bool[] rchLft = {false, false, false, false};
     private bool[] rchRht = { false, false, false, false };
     private bool[] tmHt = { false, false, false, false };
+    private Vector2[] readyvec = new Vector2[4];
     public int players = 0;
     private bool playerNumChange = false;
 
+
+
     [SerializeField]
     private guiSpot choose;
-
-    [SerializeField]
-    private guiSpot play;
-
-    [SerializeField]
-    private guiSpot back;
 
     [SerializeField]
     private guiSpot lone;
@@ -27,27 +29,10 @@ public class carSelect : MonoBehaviour {
     private guiSpot none;
 
 
-    [Header("P1(Top Left)")]
-    [SerializeField]private guiSpot TLback;
-    [SerializeField]private guiSpot TLnext;
-    [SerializeField]private guiSpot TLCont;
-
-    [Header("P2(Top Right)")]
-    [SerializeField]private guiSpot TRback;
-    [SerializeField]private guiSpot TRnext;
-    [SerializeField]private guiSpot TRCont;
+    [SerializeField]
+    private guiSpot ready;
 
 
-    [Header("P3(Bottom Left)")]
-    [SerializeField]private guiSpot BLback;
-    [SerializeField]private guiSpot BLnext;
-    [SerializeField]private guiSpot BLCont;
-
-
-    [Header("P4(Top Right)")]
-    [SerializeField]private guiSpot BRback;
-    [SerializeField]private guiSpot BRnext;
-    [SerializeField]private guiSpot BRCont;
 
 
 
@@ -71,119 +56,196 @@ public class carSelect : MonoBehaviour {
             starts[i] = "P" + (int)(i + 1) + "_Start";
             selectors[i] = GameObject.Find("p" + (int)(i + 1)).GetComponent<selector>();
             selectors[i].index = PlayerPrefs.GetInt("p" + (int)(i + 1) + "Color");
+            selectors[i].gameObject.SetActive(false);
         }
 
 
         choose.Start();
-        play.Start();
-        back.Start();
         lone.Start();
         none.Start();
-        /*
-        TLback.Start();
-        TLnext.Start();
-        TRback.Start();
-        TRnext.Start();
-        BLback.Start();
-        BLnext.Start();
-        BRback.Start();
-        BRnext.Start();
-        TLCont.Start();
-        TRCont.Start();
-        BLCont.Start();
-        BRCont.Start();
-        */
+        ready.Start();
     }
 
-
-    void Update()
+    void changePlaces()
     {
-        if(players!= Input.GetJoystickNames().Length)
+        switch (players)
         {
-            players = Input.GetJoystickNames().Length;
-            playerNumChange = true;
-        }
-        //only goes through the switch statement if the amount of players changes
-        if (true)
-        {
-            switch (players)
-            {
-                case 0:
-                    selectors[0].gameObject.SetActive(false);
-                    selectors[1].gameObject.SetActive(false);
-                    selectors[2].gameObject.SetActive(false);
-                    selectors[3].gameObject.SetActive(false);
-                    break;
-                case 1:
-                    selectors[0].gameObject.SetActive(true);
+            case 0:
+                break;
+            case 1:
+                readyvec[0] = new Vector2(0, 0);
+                if (selectors[0].gameObject.activeSelf)
+                {
                     selectors[0].gameObject.transform.position = new Vector3(0, 0, 0);
                     selectors[0].gameObject.transform.localScale = new Vector3(2, 2, 2);
-                    selectors[1].gameObject.SetActive(false);
-                    selectors[2].gameObject.SetActive(false);
-                    selectors[3].gameObject.SetActive(false);
-                    break;
-                case 2:
-                    selectors[0].gameObject.SetActive(true);
+                }
+
+                break;
+            case 2:
+
+                readyvec[0] = new Vector2(0.25f * Screen.width, 0);
+                readyvec[1] = new Vector2(-0.25f * Screen.width, 0);
+                if (selectors[0].gameObject.activeSelf)
+                {
                     selectors[0].gameObject.transform.position = new Vector3(-3, 0, 0);
-                    selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
-                    selectors[1].gameObject.SetActive(true);
+                    selectors[0].gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                if (selectors[1].gameObject.activeSelf)
+                {
                     selectors[1].gameObject.transform.position = new Vector3(3, 0, 0);
-                    selectors[2].gameObject.SetActive(false);
-                    selectors[3].gameObject.SetActive(false);
+                    selectors[1].gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
                     break;
                 case 3:
-                    selectors[0].gameObject.SetActive(true);
+                if (selectors[0].gameObject.activeSelf)
+                {
                     selectors[0].gameObject.transform.position = new Vector3(-3, 2.5f, 0);
                     selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
-                    selectors[1].gameObject.SetActive(true);
+                }
+                if (selectors[1].gameObject.activeSelf)
+                {
                     selectors[1].gameObject.transform.position = new Vector3(3, 2.5f, 0);
-                    selectors[2].gameObject.SetActive(true);
+                    selectors[1].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                }
+                if (selectors[2].gameObject.activeSelf)
+                {
                     selectors[2].gameObject.transform.position = new Vector3(0, -0.6f, 0);
-                    selectors[3].gameObject.SetActive(false);
+                    selectors[2].gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
                     break;
                 case 4:
-                    selectors[0].gameObject.SetActive(true);
+
+                if (selectors[0].gameObject.activeSelf)
+                {
                     selectors[0].gameObject.transform.position = new Vector3(-3, 2.5f, 0);
                     selectors[0].gameObject.transform.localScale = new Vector3(1, 1, 1);
-                    selectors[1].gameObject.SetActive(true);
+                }
+                if (selectors[1].gameObject.activeSelf)
+                {
                     selectors[1].gameObject.transform.position = new Vector3(3, 2.5f, 0);
-                    selectors[2].gameObject.SetActive(true);
+                    selectors[1].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                }
+
+                if (selectors[2].gameObject.activeSelf)
+                {
                     selectors[2].gameObject.transform.position = new Vector3(-3, -0.6f, 0);
-                    selectors[3].gameObject.SetActive(true);
+                    selectors[2].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                }
+
+                if (selectors[3].gameObject.activeSelf)
+                {
                     selectors[3].gameObject.transform.position = new Vector3(3, -0.6f, 0);
+                    selectors[3].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                }
                     break;
                 default:
 
                     break;
-            }
-            playerNumChange = false;
         }
 
-        for (int i = 0; i < players; i++)
+    }
+
+    void Update()
+    {
+        switch (players)
+        {
+            case 0:
+                break;
+            case 1:
+                readyvec[0] = new Vector2(0.5f*Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
+                break;
+            case 2:
+                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width / 2, Screen.height - ready.height / 2);
+                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, Screen.height - ready.height / 2);
+                break;
+            case 3:
+                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width/2, 0.25f * Screen.height - ready.height / 2);
+                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+                readyvec[2] = new Vector2(0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
+                break;
+            case 4:
+                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+                readyvec[2] = new Vector2(0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
+                readyvec[3] = new Vector2(-0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
+                break;
+            default:
+
+                break;
+        }
+
+        for (int i = 0; i < 4; i++)
         {
             if (Input.GetButtonDown(aButtons[i]))
             {
-                Debug.Log("pressing a");
                 //load level at index one, should be set to the first race
-                Application.LoadLevel(3);
+                switch (slctrTyps[i])
+                {
+                    case slctrTyp.bck:
+                        selectors[i].gameObject.SetActive(true);    
+                        slctrTyps[i] = slctrTyp.slct;
+                        players++;
+                        changePlaces();
+                        break;
+                    case slctrTyp.slct:
+                        selectors[i].gameObject.SetActive(false);
+                        slctrTyps[i] = slctrTyp.frwrd;
+                        changePlaces();
+                        break;
+                    case slctrTyp.frwrd:
+                        for(int j = 0; j < 4; j++)
+                        {
+                            if(selectors[i].gameObject.activeSelf)
+                            {
+                                if(slctrTyps[i] == slctrTyp.frwrd)
+                                {
+                                    Application.LoadLevel(3);
+                                }
+                            }
+                        }
+                            Application.LoadLevel(3);
+                        break;
+                    default:
+                        break;
+                }
+                PlayerPrefs.SetInt("players", players);
             }
             if (Input.GetButtonDown(bButtons[i]))
             {
-                Debug.Log("pressing b");
-                //load level at index zero, should be set to menu
-                Application.LoadLevel(0);
+
+                //load level at index one, should be set to the first race
+                switch (slctrTyps[i])
+                {
+                    case slctrTyp.bck:
+                        Application.LoadLevel(0);
+                        break;
+                    case slctrTyp.slct:
+                        selectors[i].gameObject.SetActive(false);
+                        slctrTyps[i] = slctrTyp.bck;
+                        players--;
+                        changePlaces();
+                        break;
+                    case slctrTyp.frwrd:
+                        selectors[i].gameObject.SetActive(true);
+                        slctrTyps[i] = slctrTyp.slct;
+                        players++;
+                        changePlaces();
+                        break;
+                    default:
+                        break;
+                }
+                PlayerPrefs.SetInt("players", players);
             }
 
             if (Input.GetAxis(horizontals[i]) < -0.5)
             {
-                Debug.Log("going left");
                 rchLft[i] = true;
                 if (rchLft[i])
                 {
                     if (timer[i] > maxTimer)
                     {
                         selectors[i].SwitchB();
-                        PlayerPrefs.SetInt("p" + (int)(i + 1) + "Color", selectors[i].index);
+                        PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
                         tmHt[i] = true;
                         timer[i] = 0;
                     }
@@ -192,14 +254,13 @@ public class carSelect : MonoBehaviour {
             }
             else if (Input.GetAxis(horizontals[i]) > 0.5)
             {
-                Debug.Log("going right");
                 rchRht[i] = true;
                 if(rchRht[i])
                 {
                     if (timer[i] > maxTimer)
                     {
                         selectors[i].Switch();
-                        PlayerPrefs.SetInt("p" + (int)(i + 1) + "Color", selectors[i].index);
+                        PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
                         tmHt[i] = true;
                         timer[i] = 0;
                     }
@@ -211,12 +272,12 @@ public class carSelect : MonoBehaviour {
                 if(!tmHt[i]&& rchLft[i])
                 {
                     selectors[i].Switch();
-                    PlayerPrefs.SetInt("p" + (int)(i + 1) + "Color", selectors[i].index);
+                    PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
                 }
                 if(!tmHt[i] && rchRht[i])
                 {
                     selectors[i].SwitchB();
-                    PlayerPrefs.SetInt("p" + (int)(i + 1) + "Color", selectors[i].index);
+                    PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
                 }
                 rchLft[i] = false;
                 rchRht[i] = false;
@@ -231,12 +292,21 @@ public class carSelect : MonoBehaviour {
     void OnGUI()
     {
         GUI.Box(new Rect(choose.x, choose.y, choose.width, choose.height), choose.text, choose.style);
-        
+        for(int i = 0; i<4; i++)
+        {
+            if(slctrTyps[i]==slctrTyp.frwrd)
+            {
+                GUI.Box(new Rect(readyvec[i].x, readyvec[i].y, ready.width, ready.height), ready.text, ready.style);
+            }
+        }
         //shows text if based on amount of people plugged in
         switch (players)
         {
             case 0:
-                GUI.Box(new Rect(none.x, none.y, none.width, none.height), none.text, none.style);
+                if(slctrTyps[0]==slctrTyp.bck&& slctrTyps[1] == slctrTyp.bck&& slctrTyps[2] == slctrTyp.bck&& slctrTyps[3] == slctrTyp.bck)
+                {
+                    GUI.Box(new Rect(none.x, none.y, none.width, none.height), none.text, none.style);
+                }
                 break;
             case 1:
                 GUI.Box(new Rect(lone.x, lone.y, lone.width, lone.height), lone.text, lone.style);
@@ -245,44 +315,5 @@ public class carSelect : MonoBehaviour {
 
                 break;
         }
-
-
-        if (GUI.Button(new Rect(back.x, back.y, back.width, back.height), back.text, back.style))
-        {
-            //load level at index one, should be set to the first level
-            Application.LoadLevel(0);
-        }
-        if (GUI.Button(new Rect(play.x, play.y, play.width, play.height), play.text, play.style))
-        {
-            //load level at index one, should be set to the first level
-            Application.LoadLevel(1);
-        }
-        /*
-        if (GUI.Button(new Rect(TLback.x, TLback.y, TLback.width, TLback.height), TLback.text, TLback.style))
-        {
-            selectors[1].SwitchB();
-            //player prefs saves data ouside of a scene so it can be retreived anywhere
-            //the first value is a string that is a key, use the key to find the value
-            PlayerPrefs.SetInt("p1Color", selectors[1].index);
-        }
-
-        if (GUI.Button(new Rect(TLnext.x, TLnext.y, TLnext.width, TLnext.height), TLnext.text, TLnext.style))
-        {
-            selectors[1].Switch();
-            PlayerPrefs.SetInt("p1Color", selectors[1].index);
-        }
-
-        if (GUI.Button(new Rect(TRback.x, TRback.y, TRback.width, TRback.height), TRback.text, TRback.style))
-        {
-            selectors[2].SwitchB();
-            PlayerPrefs.SetInt("p2Color", selectors[2].index);
-        }
-
-        if (GUI.Button(new Rect(TRnext.x, TRnext.y, TRnext.width, TRnext.height), TRnext.text, TRnext.style))
-        {
-            selectors[2].Switch();
-            PlayerPrefs.SetInt("p2Color", selectors[2].index);
-        }
-        */
     }
 }

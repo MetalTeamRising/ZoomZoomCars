@@ -21,6 +21,8 @@ public class SelectTrack : MonoBehaviour {
     float time = 0;
     Random rng = new Random();
 
+
+
     // Use this for initialization
     void Start () {
         isActive = new bool[4];
@@ -160,6 +162,7 @@ public class SelectTrack : MonoBehaviour {
         prevV = Input.GetAxis("P1_Vertical");
         if (Input.GetButton("P1_ButtonA"))
         {
+            GameObject.Find("Canvas").SetActive(false);
             howto.SetActive(true);
         }
         if (Input.GetButton("P1_ButtonB"))

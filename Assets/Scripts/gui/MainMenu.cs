@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 
 
     //enum for controlling screen
-    private enum mnType{main, inst, crd }
+    private enum mnType{main, inst, crd };
     private mnType currentScreen = mnType.main;
     
     private string[] verticals = new string[4];
@@ -65,10 +65,8 @@ public class MainMenu : MonoBehaviour {
         {
             if (currentScreen == mnType.main)
             {
-                Debug.Log("if the current screen is the main");
                 if (Input.GetButtonDown(aButtons[i]))
                 {
-                    Debug.Log("get button down a button");
                     switch (actbttn)
                     {
                         case 1:
@@ -88,14 +86,12 @@ public class MainMenu : MonoBehaviour {
 
             if (Input.GetButtonDown(bButtons[i]))
             {
-                Debug.Log("get button down b button");
                 currentScreen = mnType.main;
             }
 
 
             if (Input.GetAxis(verticals[i]) < -0.5)
             {
-                Debug.Log("going up");
                 rchDn[i] = true;
                 if (rchDn[i])
                 {
@@ -117,7 +113,6 @@ public class MainMenu : MonoBehaviour {
             }
             else if (Input.GetAxis(verticals[i]) > 0.5)
             {
-                Debug.Log("going down");
                 rchUp[i] = true;
                 if (rchUp[i])
                 {
