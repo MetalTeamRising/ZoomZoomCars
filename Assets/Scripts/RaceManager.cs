@@ -93,7 +93,6 @@ public class RaceManager : MonoBehaviour {
         for(int i = 1; i <= players; i++)
         {
             cars[i - 1] = carsColor[PlayerPrefs.GetInt("p" + i + "Color")];
-            //aaaaDebug.Log(("p" + i + "Color"));
             cars[i-1].GetComponent<Car>().Player = i;
         }
         //place the car
@@ -103,7 +102,9 @@ public class RaceManager : MonoBehaviour {
             myCars[i].transform.position = SpawnArray[i].transform.position;
             myCars[i].transform.forward = SpawnArray[i].transform.forward;  
         }
-        
+
+
+        Debug.Log("go go go go "+players);
         //Camera stuff
         for(int i = 0; i < players; i++)
         {
@@ -131,6 +132,14 @@ public class RaceManager : MonoBehaviour {
             else if(players == 4)
             {
                 allCamera[i].rect = new Rect(numPlayerFour[i].x, numPlayerFour[i].y, numPlayerFour[i].z, numPlayerFour[i].w);
+            }
+            else
+            {
+                allCamera[i].rect = new Rect(rectPos, rectPos, rectSize, rectSize);
+                allCamera[1].gameObject.SetActive(false);
+                allCamera[2].gameObject.SetActive(false);
+                allCamera[3].gameObject.SetActive(false);
+
             }
         }
         currentTime = 3.0f;

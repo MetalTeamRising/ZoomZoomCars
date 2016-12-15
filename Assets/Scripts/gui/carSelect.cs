@@ -191,7 +191,6 @@ public class carSelect : MonoBehaviour {
                         changePlaces();
                         break;
                     case slctrTyp.slct:
-                        selectors[i].gameObject.SetActive(false);
                         slctrTyps[i] = slctrTyp.frwrd;
                         changePlaces();
                         break;
@@ -232,7 +231,6 @@ public class carSelect : MonoBehaviour {
                         changePlaces();
                         break;
                     case slctrTyp.frwrd:
-                        selectors[i].gameObject.SetActive(true);
                         slctrTyps[i] = slctrTyp.slct;
                         changePlaces();
                         break;

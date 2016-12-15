@@ -13,7 +13,6 @@ public class selector : MonoBehaviour
 
     void Start()
     {
-
         m_gameObjects = new GameObject[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
@@ -21,8 +20,6 @@ public class selector : MonoBehaviour
             m_gameObjects[i] = transform.GetChild(i).gameObject;
         }
         m_gameObjects[index].SetActive(true);
-
-
     }
 
     // Update is called once per frame
