@@ -14,7 +14,6 @@ public class carSelect : MonoBehaviour {
     private bool[] rchRht = { false, false, false, false };
     private bool[] tmHt = { false, false, false, false };
     private Vector2[] readyvec = new Vector2[4];
-    public int players = 0;
     private bool playerNumChange = false;
 
     [SerializeField]
@@ -23,6 +22,7 @@ public class carSelect : MonoBehaviour {
     [SerializeField]
     private guiSpot choose,lone,none,ready;
 
+    int players;
 
 
 
@@ -50,7 +50,7 @@ public class carSelect : MonoBehaviour {
             selectors[i].gameObject.SetActive(false);
         }
 
-
+        players = Input.GetJoystickNames().Length;
 
         choose.Start();
         lone.Start();
@@ -69,12 +69,11 @@ public class carSelect : MonoBehaviour {
         p2c4 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
         p3c4 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
         p4c4 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
-        players = 0;
     }
 
     void changePlaces()
     {
-        switch (Input.GetJoystickNames().Length)
+        switch (players)
         {
             case 0:
                 break;
@@ -90,12 +89,12 @@ public class carSelect : MonoBehaviour {
                 if (selectors[0].gameObject.activeSelf)
                 {
                     selectors[0].gameObject.transform.position = new Vector3(-3, 0, 0);
-                    selectors[0].gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                    selectors[0].gameObject.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 }
                 if (selectors[1].gameObject.activeSelf)
                 {
                     selectors[1].gameObject.transform.position = new Vector3(3, 0, 0);
-                    selectors[1].gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                    selectors[1].gameObject.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 }
                     break;
                 case 3:
@@ -145,7 +144,7 @@ public class carSelect : MonoBehaviour {
                     break;
         }
 
-        switch (Input.GetJoystickNames().Length)
+        switch (players)
         {
             case 0:
                 break;
@@ -181,13 +180,12 @@ public class carSelect : MonoBehaviour {
         {
             if (Input.GetButtonDown(aButtons[i]))
             {
-                //load level at index one, should be set to the first race
                 switch (slctrTyps[i])
                 {
                     case slctrTyp.bck:
-                        selectors[i].gameObject.SetActive(true);    
+                        selectors[i].gameObject.SetActive(true);
+                        selectors[i].m_gameObjects[selectors[i].index].SetActive(true);
                         slctrTyps[i] = slctrTyp.slct;
-                        players++;
                         changePlaces();
                         break;
                     case slctrTyp.slct:
@@ -197,9 +195,9 @@ public class carSelect : MonoBehaviour {
                     case slctrTyp.frwrd:
                         //go through selecots, see howmany are active
                         bool dontgo = false;
-                        for (int j = 0; j < 4; j++)
+                        for (int j = 0; j < players; j++)
                         {
-                                if (slctrTyps[j] == slctrTyp.slct)
+                                if (slctrTyps[j] != slctrTyp.frwrd)
                                 {
                                 dontgo = true;
                                 }
@@ -212,8 +210,6 @@ public class carSelect : MonoBehaviour {
                     default:
                         break;
                 }
-                Debug.Log(players);
-                PlayerPrefs.SetInt("players", players);
             }
             if (Input.GetButtonDown(bButtons[i]))
             {
@@ -226,8 +222,8 @@ public class carSelect : MonoBehaviour {
                         break;
                     case slctrTyp.slct:
                         selectors[i].gameObject.SetActive(false);
+                        selectors[i].m_gameObjects[selectors[i].index].SetActive(true);
                         slctrTyps[i] = slctrTyp.bck;
-                        players--;
                         changePlaces();
                         break;
                     case slctrTyp.frwrd:
@@ -237,13 +233,12 @@ public class carSelect : MonoBehaviour {
                     default:
                         break;
                 }
-                Debug.Log(players);
-                PlayerPrefs.SetInt("players", players);
             }
             if (selectors[i])
             {
-                if (Input.GetAxis(horizontals[i]) < -0.5)
+                if (Input.GetAxis(horizontals[i]) < -0.75)
                 {
+                    Debug.Log(Input.GetAxis(horizontals[i]));
                     rchLft[i] = true;
                     if (rchLft[i])
                     {
@@ -257,7 +252,7 @@ public class carSelect : MonoBehaviour {
                         timer[i] = timer[i] + Time.deltaTime;
                     }
                 }
-                else if (Input.GetAxis(horizontals[i]) > 0.5)
+                else if (Input.GetAxis(horizontals[i]) > 0.75)
                 {
                     rchRht[i] = true;
                     if (rchRht[i])
@@ -283,7 +278,6 @@ public class carSelect : MonoBehaviour {
                     {
                         selectors[i].SwitchB();
                         PlayerPrefs.SetInt("p" + (int)( i + 1) + "Color", selectors[i].index);
-                        Debug.Log("p" + (int)( i + 1) + "Color");
                     }
                     rchLft[i] = false;
                     rchRht[i] = false;

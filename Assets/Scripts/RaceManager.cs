@@ -53,8 +53,7 @@ public class RaceManager : MonoBehaviour {
         SpawnArray = new GameObject[cars.Length];
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
-        players = PlayerPrefs.GetInt("players");
-        Debug.Log(players);
+        players = Input.GetJoystickNames().Length;
 
         numPlayersTwo = new Vector4[2];
         numPlayersTwo[0] = new Vector4(0, 0, 0.5f, 1f);
