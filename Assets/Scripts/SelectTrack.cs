@@ -35,38 +35,28 @@ public class SelectTrack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (howto.activeSelf)
+        if (Input.GetButton("P1_ButtonA"))
         {
-            if(time >= 3)
+            switch (current)
             {
-                if (Input.GetButton("P1_ButtonA"))
-                {
-                    switch (current)
-                    {
-                        case 0:
-                            Application.LoadLevel(1);
-                            break;
-                        case 1:
-                            Application.LoadLevel(4);
-                            break;
-                        case 2:
-                            Application.LoadLevel(5);
-                            break;
-                        case 3:
-                            int temp = Random.Range(0, 4);
-                            if(temp == 0) { Application.LoadLevel(1); }
-                            else if(temp == 1) { Application.LoadLevel(4); }
-                            else if(temp == 2) { Application.LoadLevel(5); }
-                            break;
-                    }
-                }
-               
+                case 0:
+                    Application.LoadLevel(1);
+                    break;
+                case 1:
+                    Application.LoadLevel(4);
+                    break;
+                case 2:
+                    Application.LoadLevel(5);
+                    break;
+                case 3:
+                    int temp = Random.Range(0, 4);
+                    if (temp == 0) { Application.LoadLevel(1); }
+                    else if (temp == 1) { Application.LoadLevel(4); }
+                    else if (temp == 2) { Application.LoadLevel(5); }
+                    break;
             }
-            else
-                {
-                    time += 1.0f;
-                }
         }
+
         moveController();
         for(int i = 0; i < 4; i++)
         {
@@ -160,11 +150,6 @@ public class SelectTrack : MonoBehaviour {
         }
         prevH = Input.GetAxis("P1_Horizontal");
         prevV = Input.GetAxis("P1_Vertical");
-        if (Input.GetButton("P1_ButtonA"))
-        {
-            GameObject.Find("Canvas").SetActive(false);
-            howto.SetActive(true);
-        }
         if (Input.GetButton("P1_ButtonB"))
         {
             Application.LoadLevel(2);
