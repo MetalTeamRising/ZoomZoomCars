@@ -20,6 +20,9 @@ public class RaceManager : MonoBehaviour {
     [SerializeField]
     Sprite[] getReady;
 
+    [SerializeField]
+    Sprite[] background;
+
     //setting the camera for 1 player
     int rectPos = 0;
     int rectSize = 1;
