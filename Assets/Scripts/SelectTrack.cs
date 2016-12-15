@@ -35,7 +35,7 @@ public class SelectTrack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButton("P1_ButtonA"))
+        if (Input.GetButton("P1_ButtonA") || Input.GetButton("P2_ButtonA") || Input.GetButton("P3_ButtonA")|| Input.GetButton("P4_ButtonA"))
         {
             switch (current)
             {
@@ -74,7 +74,7 @@ public class SelectTrack : MonoBehaviour {
     void moveController()
     {
         //move the selector around
-        if (Input.GetAxis("P1_Horizontal")  == 1 && prevH != 1)
+        if ((Input.GetAxis("P1_Horizontal")  == 1 && prevH != 1)|| (Input.GetAxis("P2_Horizontal") == 1 && prevH != 1)|| (Input.GetAxis("P3_Horizontal") == 1 && prevH != 1)|| (Input.GetAxis("P4_Horizontal") == 1 && prevH != 1))
         {
             isActive[current] = false;
             current++;
@@ -85,7 +85,7 @@ public class SelectTrack : MonoBehaviour {
             isActive[current] = true;
             Debug.Log("greater");
         }
-        else if(Input.GetAxis("P1_Horizontal") == -1 && prevH != -1)
+        else if((Input.GetAxis("P1_Horizontal") == -1 && prevH != -1)|| (Input.GetAxis("P2_Horizontal") == -1 && prevH != -1)|| (Input.GetAxis("P3_Horizontal") == -1 && prevH != -1)|| (Input.GetAxis("P4_Horizontal") == -1 && prevH != -1))
         {
             isActive[current] = false;
             current--;
@@ -96,7 +96,7 @@ public class SelectTrack : MonoBehaviour {
             isActive[current] = true;
             Debug.Log("lesser");
         }
-        else if(Input.GetAxis("P1_Vertical") == 1 && prevV != 1)
+        else if((Input.GetAxis("P1_Vertical") == 1 && prevV != 1)|| (Input.GetAxis("P2_Vertical") == 1 && prevV != 1)|| (Input.GetAxis("P3_Vertical") == 1 && prevV != 1)|| (Input.GetAxis("P4_Vertical") == 1 && prevV != 1))
         {
             switch (current)
             {
@@ -122,7 +122,7 @@ public class SelectTrack : MonoBehaviour {
                     break;
             }
         }
-        else if(Input.GetAxis("P1_Vertical") == -1 && prevV != -1)
+        else if((Input.GetAxis("P1_Vertical") == -1 && prevV != -1)|| (Input.GetAxis("P2_Vertical") == -1 && prevV != -1)|| (Input.GetAxis("P3_Vertical") == -1 && prevV != -1)|| (Input.GetAxis("P4_Vertical") == -1 && prevV != -1))
         {
             switch (current)
             {
@@ -150,7 +150,7 @@ public class SelectTrack : MonoBehaviour {
         }
         prevH = Input.GetAxis("P1_Horizontal");
         prevV = Input.GetAxis("P1_Vertical");
-        if (Input.GetButton("P1_ButtonB"))
+        if (Input.GetButton("P1_ButtonB")|| Input.GetButton("P2_ButtonB")|| Input.GetButton("P3_ButtonB")|| Input.GetButton("P4_ButtonB"))
         {
             Application.LoadLevel(2);
         }
