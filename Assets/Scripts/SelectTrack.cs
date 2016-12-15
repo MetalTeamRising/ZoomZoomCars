@@ -154,7 +154,6 @@ public class SelectTrack : MonoBehaviour {
         {
             Application.LoadLevel(2);
         }
-
-        Debug.Log(current);
+        
     }
 }

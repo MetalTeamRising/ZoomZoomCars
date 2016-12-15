@@ -17,20 +17,11 @@ public class carSelect : MonoBehaviour {
     public int players = 0;
     private bool playerNumChange = false;
 
-
+    [SerializeField]
+    private Vector3 p1c1, p1c2, p2c2, p1c3, p2c3, p3c3, p1c4, p2c4, p3c4, p4c4;
 
     [SerializeField]
-    private guiSpot choose;
-
-    [SerializeField]
-    private guiSpot lone;
-
-    [SerializeField]
-    private guiSpot none;
-
-
-    [SerializeField]
-    private guiSpot ready;
+    private guiSpot choose,lone,none,ready;
 
 
 
@@ -60,10 +51,25 @@ public class carSelect : MonoBehaviour {
         }
 
 
+
         choose.Start();
         lone.Start();
         none.Start();
         ready.Start();
+
+
+
+        p1c1 = new Vector2(0.5f * Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
+        p1c2 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
+        p2c2 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
+        p1c3 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+        p2c3 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+        p3c3 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
+        p1c4 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+        p2c4 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
+        p3c4 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
+        p4c4 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
+        players = 0;
     }
 
     void changePlaces()
@@ -152,22 +158,22 @@ public class carSelect : MonoBehaviour {
             case 0:
                 break;
             case 1:
-                readyvec[0] = new Vector2(0.5f*Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
-                break;
+                readyvec[0] = p1c1;
+                break;        
             case 2:
-                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width / 2, Screen.height - ready.height / 2);
-                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, Screen.height - ready.height / 2);
-                break;
+                readyvec[0] = p1c2;
+                readyvec[1] = p2c2;
+                break;        
             case 3:
-                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width/2, 0.25f * Screen.height - ready.height / 2);
-                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
-                readyvec[2] = new Vector2(0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
+                readyvec[0] = p1c3;
+                readyvec[1] = p2c3;
+                readyvec[2] = p3c3;
                 break;
             case 4:
-                readyvec[0] = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
-                readyvec[1] = new Vector2(-0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
-                readyvec[2] = new Vector2(0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
-                readyvec[3] = new Vector2(-0.25f * Screen.width - ready.width / 2, -0.25f * Screen.height - ready.height / 2);
+                readyvec[0] = p1c4;
+                readyvec[1] = p2c4;
+                readyvec[2] = p3c4;
+                readyvec[3] = p4c4;
                 break;
             default:
 
@@ -193,21 +199,24 @@ public class carSelect : MonoBehaviour {
                         changePlaces();
                         break;
                     case slctrTyp.frwrd:
-                        for(int j = 0; j < 4; j++)
+                        //go through selecots, see howmany are active
+                        bool dontgo = false;
+                        for (int j = 0; j < 4; j++)
                         {
-                            if(selectors[i].gameObject.activeSelf)
-                            {
-                                if(slctrTyps[i] == slctrTyp.frwrd)
+                                if (slctrTyps[j] == slctrTyp.slct)
                                 {
-                                    Application.LoadLevel(3);
+                                dontgo = true;
                                 }
-                            }
                         }
+                        if(!dontgo)
+                        {
                             Application.LoadLevel(3);
+                        }
                         break;
                     default:
                         break;
                 }
+                Debug.Log(players);
                 PlayerPrefs.SetInt("players", players);
             }
             if (Input.GetButtonDown(bButtons[i]))
@@ -228,61 +237,65 @@ public class carSelect : MonoBehaviour {
                     case slctrTyp.frwrd:
                         selectors[i].gameObject.SetActive(true);
                         slctrTyps[i] = slctrTyp.slct;
-                        players++;
                         changePlaces();
                         break;
                     default:
                         break;
                 }
+                Debug.Log(players);
                 PlayerPrefs.SetInt("players", players);
             }
-
-            if (Input.GetAxis(horizontals[i]) < -0.5)
+            if (selectors[i])
             {
-                rchLft[i] = true;
-                if (rchLft[i])
+                if (Input.GetAxis(horizontals[i]) < -0.5)
                 {
-                    if (timer[i] > maxTimer)
+                    rchLft[i] = true;
+                    if (rchLft[i])
                     {
-                        selectors[i].SwitchB();
-                        PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
-                        tmHt[i] = true;
-                        timer[i] = 0;
+                        if (timer[i] > maxTimer)
+                        {
+                            selectors[i].SwitchB();
+                            PlayerPrefs.SetInt("p" + (int)( i + 1) + "Color", selectors[i].index);
+                            tmHt[i] = true;
+                            timer[i] = 0;
+                        }
+                        timer[i] = timer[i] + Time.deltaTime;
                     }
-                    timer[i] = timer[i] + Time.deltaTime;
                 }
-            }
-            else if (Input.GetAxis(horizontals[i]) > 0.5)
-            {
-                rchRht[i] = true;
-                if(rchRht[i])
+                else if (Input.GetAxis(horizontals[i]) > 0.5)
                 {
-                    if (timer[i] > maxTimer)
+                    rchRht[i] = true;
+                    if (rchRht[i])
+                    {
+                        if (timer[i] > maxTimer)
+                        {
+                            selectors[i].Switch();
+                            PlayerPrefs.SetInt("p" + (int)( i + 1) + "Color", selectors[i].index);
+                            tmHt[i] = true;
+                            timer[i] = 0;
+                        }
+                        timer[i] = timer[i] + Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    if (!tmHt[i] && rchLft[i])
                     {
                         selectors[i].Switch();
-                        PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
-                        tmHt[i] = true;
-                        timer[i] = 0;
+                        PlayerPrefs.SetInt("p" + (int)(i + 1) + "Color", selectors[i].index);
                     }
-                    timer[i] = timer[i] + Time.deltaTime;
+                    if (!tmHt[i] && rchRht[i])
+                    {
+                        selectors[i].SwitchB();
+                        PlayerPrefs.SetInt("p" + (int)( i + 1) + "Color", selectors[i].index);
+                        Debug.Log("p" + (int)( i + 1) + "Color");
+                    }
+                    rchLft[i] = false;
+                    rchRht[i] = false;
+                    tmHt[i] = false;
+                    timer[i] = 0;
                 }
-            }
-            else
-            {
-                if(!tmHt[i]&& rchLft[i])
-                {
-                    selectors[i].Switch();
-                    PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
-                }
-                if(!tmHt[i] && rchRht[i])
-                {
-                    selectors[i].SwitchB();
-                    PlayerPrefs.SetInt("p" + (int)(players-i + 1) + "Color", selectors[i].index);
-                }
-                rchLft[i] = false;
-                rchRht[i] = false;
-                tmHt[i] = false;
-                timer[i] = 0;
+
             }
         }
     }

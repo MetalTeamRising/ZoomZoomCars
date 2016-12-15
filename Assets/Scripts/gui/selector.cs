@@ -22,6 +22,7 @@ public class selector : MonoBehaviour
         }
         m_gameObjects[index].SetActive(true);
 
+
     }
 
     // Update is called once per frame

@@ -54,6 +54,7 @@ public class RaceManager : MonoBehaviour {
         myCars = new GameObject[cars.Length];
         finishedRacers = new GameObject[cars.Length];
         players = PlayerPrefs.GetInt("players");
+        Debug.Log(players);
 
         numPlayersTwo = new Vector4[2];
         numPlayersTwo[0] = new Vector4(0, 0, 0.5f, 1f);
@@ -92,6 +93,7 @@ public class RaceManager : MonoBehaviour {
         for(int i = 1; i <= players; i++)
         {
             cars[i - 1] = carsColor[PlayerPrefs.GetInt("p" + i + "Color")];
+            //aaaaDebug.Log(("p" + i + "Color"));
             cars[i-1].GetComponent<Car>().Player = i;
         }
         //place the car
@@ -187,7 +189,7 @@ public class RaceManager : MonoBehaviour {
         else if(gameOver && gameOverTimer < 2.0)
         {
             gameOverTimer += Time.deltaTime;
-            Debug.Log(gameOverTimer);
+            //aaaDebug.Log(gameOverTimer);
         }
 	}
     void RaceStart()
