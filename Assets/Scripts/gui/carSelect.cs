@@ -64,7 +64,7 @@ public class carSelect : MonoBehaviour {
         p2c2 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.5f * Screen.height - ready.height / 2);
         p1c3 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
         p2c3 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
-        p3c3 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
+        p3c3 = new Vector2(0.5f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
         p1c4 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
         p2c4 = new Vector2(0.75f * Screen.width - ready.width / 2, 0.25f * Screen.height - ready.height / 2);
         p3c4 = new Vector2(0.25f * Screen.width - ready.width / 2, 0.75f * Screen.height - ready.height / 2);
@@ -74,12 +74,11 @@ public class carSelect : MonoBehaviour {
 
     void changePlaces()
     {
-        switch (players)
+        switch (Input.GetJoystickNames().Length)
         {
             case 0:
                 break;
             case 1:
-                readyvec[0] = new Vector2(0, 0);
                 if (selectors[0].gameObject.activeSelf)
                 {
                     selectors[0].gameObject.transform.position = new Vector3(0, 0, 0);
@@ -88,9 +87,6 @@ public class carSelect : MonoBehaviour {
 
                 break;
             case 2:
-
-                readyvec[0] = new Vector2(0.25f * Screen.width, 0);
-                readyvec[1] = new Vector2(-0.25f * Screen.width, 0);
                 if (selectors[0].gameObject.activeSelf)
                 {
                     selectors[0].gameObject.transform.position = new Vector3(-3, 0, 0);
@@ -149,21 +145,17 @@ public class carSelect : MonoBehaviour {
                     break;
         }
 
-    }
-
-    void Update()
-    {
-        switch (players)
+        switch (Input.GetJoystickNames().Length)
         {
             case 0:
                 break;
             case 1:
                 readyvec[0] = p1c1;
-                break;        
+                break;
             case 2:
                 readyvec[0] = p1c2;
                 readyvec[1] = p2c2;
-                break;        
+                break;
             case 3:
                 readyvec[0] = p1c3;
                 readyvec[1] = p2c3;
@@ -179,6 +171,11 @@ public class carSelect : MonoBehaviour {
 
                 break;
         }
+
+    }
+
+    void Update()
+    {
 
         for (int i = 0; i < 4; i++)
         {
